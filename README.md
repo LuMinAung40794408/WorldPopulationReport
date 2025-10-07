@@ -1,9 +1,7 @@
 **Hello Team**
 
-![Master Build Status](https://github.com/LuMinAung40794408/WorldPopulationReport/actions/workflows/main.yml/badge.svg)
 
-[![LICENSE](https://img.shields.io/github/license/LuMinAung40794408/WorldPopulationReport.svg?style=flat-square)](https://github.com/LuMinAung40794408/WorldPopulationReport/blob/master/LICENSE)
-
-[![Releases](https://img.shields.io/github/release/LuMinAung40794408/WorldPopulationReport/all.svg?style=flat-square)](https://github.com/LuMinAung40794408/WorldPopulationReport/releases)
-
-![Develop Build Status](https://img.shields.io/github/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml/develop?style=flat-square)
+* **Master Build Status** ![Master Build Status](https://img.shields.io/github/actions/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml?branch=master)
+* **Develop Build Status** ![Develop Build Status](https://img.shields.io/github/actions/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml?branch=develop)
+* **License** ![GitHub license](https://img.shields.io/github/license/LuMinAung40794408/WorldPopulationReport)
+* **Release** ![GitHub release (latest by date)](https://img.shields.io/github/v/release/LuMinAung40794408/WorldPopulationReport)

@@ -1,4 +1,4 @@
-name: Master Build Status
+name: Develop Build Status
 on: push
 
 jobs:
