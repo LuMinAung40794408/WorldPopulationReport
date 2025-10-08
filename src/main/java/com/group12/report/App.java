@@ -54,6 +54,7 @@ public class App
         CountryReport report = new CountryReport();
         report.displayCountries(countries);
 
+        //test
         app.disconnect();
     }
 }
