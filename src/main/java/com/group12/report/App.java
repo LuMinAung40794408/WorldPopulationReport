@@ -37,6 +37,7 @@ public class App
                 System.out.println("Disconnected.");
             }
         }
+
         catch (Exception e)
         {
             System.out.println("Error closing connection.");
