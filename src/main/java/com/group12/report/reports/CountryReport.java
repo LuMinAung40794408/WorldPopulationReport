@@ -1,26 +1,26 @@
 package com.group12.report.reports;
 
-import com.group12.report.data_access.CountryDAO;
 import com.group12.report.models.Country;
-import java.util.List;
+import java.util.ArrayList;
 
-public class CountryReport {
-    private CountryDAO countryDAO;
+public class CountryReport
+{
+    public void displayCountries(ArrayList<Country> countries)
+    {
+        if (countries == null)
+        {
+            System.out.println("No countries to display.");
+            return;
+        }
 
-    public CountryReport(CountryDAO dao) {
-        this.countryDAO = dao;
-    }
+        System.out.printf("%-6s %-45s %-15s %-20s %-12s%n",
+                "Code", "Name", "Continent", "Region", "Population");
+        System.out.println("-------------------------------------------------------------------------------------");
 
-    public void printAllCountriesByPopulation() {
-        try {
-            List<Country> countries = countryDAO.getAllCountriesByPopulation();
-            System.out.printf("%-5s %-30s %-20s %-20s %-10s%n", "Code", "Name", "Continent", "Region", "Population");
-            for (Country c : countries) {
-                System.out.printf("%-5s %-30s %-20s %-20s %-10d%n",
-                        c.getCode(), c.getName(), c.getContinent(), c.getRegion(), c.getPopulation());
-            }
-        } catch (Exception e) {
-            System.out.println("Error generating country report: " + e.getMessage());
+        for (Country c : countries)
+        {
+            System.out.printf("%-6s %-45s %-15s %-20s %-12d%n",
+                    c.code, c.name, c.continent, c.region, c.population);
         }
     }
 }

@@ -1,30 +1,59 @@
 package com.group12.report;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
+import com.group12.report.data_access.CountryDAO;
+import com.group12.report.models.Country;
+import com.group12.report.reports.CountryReport;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.ArrayList;
 
 public class App
 {
+    private Connection con = null;
+
+    public void connect(String location, int delay)
+    {
+        try
+        {
+            System.out.println("Connecting to database...");
+            Thread.sleep(delay);
+            con = DriverManager.getConnection(location, "root", "example");
+            System.out.println("Connected successfully!");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Connection failed: " + e.getMessage());
+        }
+    }
+
+    public void disconnect()
+    {
+        try
+        {
+            if (con != null)
+            {
+                con.close();
+                System.out.println("Disconnected.");
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error closing connection.");
+        }
+    }
+
     public static void main(String[] args)
     {
-        // Connect to MongoDB on local system - we're using port 27000
-        MongoClient mongoClient = new MongoClient("mongo-dbserver");
-        // Get a database - will create when we use it
-        MongoDatabase database = mongoClient.getDatabase("mydb");
-        // Get a collection from the database
-        MongoCollection<Document> collection = database.getCollection("test");
-        // Create a document to store
-        Document doc = new Document("name", "Kevin Sim")
-                .append("class", "DevOps")
-                .append("year", "2024")
-                .append("result", new Document("CW", 95).append("EX", 85));
-        // Add document to collection
-        collection.insertOne(doc);
+        App app = new App();
+        app.connect("jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false", 20000);
 
-        // Check document in collection
-        Document myDoc = collection.find().first();
-        System.out.println(myDoc.toJson());
+        CountryDAO dao = new CountryDAO(app.con);
+        ArrayList<Country> countries = dao.getAllCountriesByPopulation();
+
+        CountryReport report = new CountryReport();
+        report.displayCountries(countries);
+
+        app.disconnect();
     }
 }
