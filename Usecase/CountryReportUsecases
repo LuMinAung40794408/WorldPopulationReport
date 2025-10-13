@@ -1,0 +1,81 @@
+# Country Reports Use cases
+
+## USE CASE: All Countries in the World Organised by Largest to Smallest Population
+
+**Goal in Context:**
+As a Developer, I need to implement a feature to list all countries in the world by population.
+
+**Scope:** WorldPopulation Report System
+**Level:** Summary Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User initiates the Country Report feature to view a global list of countries organized by population.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 1.0
+
+---
+
+## USE CASE: All Countries in a Continent Organised by Largest to Smallest Population
+
+**Goal in Context:**
+As a Developer, I must design a function to show countries by population within a continent.
+
+**Scope:** WorldPopulation Report System
+**Level:** Primary Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User runs the Country Report feature to display countries within a continent sorted by population.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 1.0
+
+---
+
+## USE CASE: All Countries in a Region Organised by Largest to Smallest Population
+
+**Goal in Context:**
+As a Developer, I need to generate a report listing countries by region in population order.
+
+**Scope:** Population Report System
+**Level:** Primary Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User executes the Country Report feature to view population rankings across a specific region.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 1.0
+
