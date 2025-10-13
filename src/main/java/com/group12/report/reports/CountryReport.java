@@ -9,14 +9,9 @@ public class CountryReport {
     // The maximum number of countries to display at once
     private final int displayLimit;
 
-    // Default constructor which sets a default limit of 15 rows
-    public CountryReport() {
-        this.displayLimit = 15;
-    }
-
     // Prints the main title for the report (just a simple header)
     public void printCategory(String categoryName) {
-        System.out.println("\n================ " + "Country Report" + " ================\n");
+        System.out.println("\n================   Country Report   ================\n");
     }
 
     // Optional constructor
@@ -33,8 +28,6 @@ public class CountryReport {
             return;
         }
 
-        // Used to calculate spacing (not really needed here, but might be helpful for formatting)
-        int tableWidth = 6 + 20 + 15 + 25 + 15 + 20 + 6;
 
         System.out.println(); // Adds a blank line before the table
         System.out.println(title); // Prints the title of the section (e.g., "Top 10 by Population")
