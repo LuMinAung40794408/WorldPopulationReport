@@ -8,10 +8,8 @@ public class CityReport {
     private final int displayLimit;
     // Max rows to print in the table (caps console output).
 
-    // Constructor to set row limit (default to 15 if not specified)
-    public CityReport() {
-        this.displayLimit = 15;
-    }
+
+
     // Default constructor: uses a sensible limit for readability.
 
     public CityReport(int displayLimit) {
@@ -20,9 +18,8 @@ public class CityReport {
     // Overloaded constructor: caller controls how many rows to show.
 
     public void printCategory(String categoryName) {
-        System.out.println("\n================ " + "City Report" + " ================\n");
-        // Prints a section header; categoryName is currently unused
-        // (could be incorporated into the banner if desired).
+        System.out.println("\n================   City Report   ================\n");
+
     }
 
     public void displayCities(List<City> cities, String title) {

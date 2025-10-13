@@ -80,7 +80,7 @@ public class App {
                     "6.All Cities in Southeast Asia Organized by Largest to Smallest Population(Southeast Asia"
             );
 // Filter by region = 'Southeast Asia' (no DB limit), then display top 10.
-// NOTE: Title string looks like it's missing a closing ')' at the end.
+
 
             cityReport.displayCities(
                     cityDAO.getCitiesByDistrict("California", null),
