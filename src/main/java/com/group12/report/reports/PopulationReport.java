@@ -40,6 +40,9 @@ public class PopulationReport {
      * @param populations List of Population objects containing data.
      * @param title Title of the report section.
      */
+
+
+
     public void displayPopulations(List<Population> populations, String title) {
         if (populations == null || populations.isEmpty()) {
             System.out.println("No population data to display for: " + title);
