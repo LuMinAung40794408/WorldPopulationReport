@@ -7,16 +7,12 @@ public class CapitalReport {
 
     private final int displayLimit;
 
-    public CapitalReport() {
-        this.displayLimit = 15;
-    }
-
     public CapitalReport(int displayLimit) {
         this.displayLimit = displayLimit;
     }
 
     public void printCategory(String categoryName) {
-        System.out.println("\n================ " + "Capital Report" + " ================\n");
+        System.out.println("\n================ Capital Report ================\n");
     }
 
     public void displayCapitals(List<Capital> capitals, String title) {
