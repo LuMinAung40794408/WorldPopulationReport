@@ -16,6 +16,7 @@ public class PopulationDAO {
 
     /**
      * 1. Retrieves the total population of the world,
+     *
      * including city and non-city breakdown.
      * @return List containing one Population object for the world
      */
@@ -35,11 +36,12 @@ public class PopulationDAO {
 
     /**
      * 2. Retrieves population details for each continent,
+     *
      * showing total, city, and non-city populations with percentages.
      * @return List of Population objects representing each continent
      */
 
-    // 2. Population of each continent
+
     public List<Population> getPopulationByContinent() {
         String sql = """
             SELECT tp.Continent AS Name,
@@ -65,6 +67,7 @@ public class PopulationDAO {
     }
     /**
      * 3. Retrieves population details for each region.
+     *
      * @return List of Population objects representing each region
      */
     public List<Population> getPopulationByRegion() {
@@ -93,6 +96,7 @@ public class PopulationDAO {
 
     /**
      * 4. Retrieves population details for each country.
+     *
      * @return List of Population objects representing each country
      */
     public List<Population> getPopulationByCountry() {
@@ -116,6 +120,7 @@ public class PopulationDAO {
 
     /**
      * 5. Retrieves population data for each district within a given country.
+     *
      * @param countryName Name of the country
      * @return List of Population objects representing districts
      */
@@ -148,6 +153,7 @@ public class PopulationDAO {
 
     /**
      * 6. Retrieves population information for all cities in the world.
+     *
      * Includes city name, country, district, and population.
      * @return List of Population objects representing each city
      */
@@ -204,6 +210,7 @@ public class PopulationDAO {
 
     /**
      * 7. Retrieves city vs non-city population comparison by continent.
+     *
      * @return List of Population objects by continent
      */
     public List<Population> getCityVsNonCityByContinent() {
@@ -232,6 +239,7 @@ public class PopulationDAO {
 
     /**
      * 8. Retrieves city vs non-city population comparison by region.
+     *
      * @return List of Population objects by region
      */
     public List<Population> getCityVsNonCityByRegion() {
