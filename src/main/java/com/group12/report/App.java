@@ -2,6 +2,9 @@ package com.group12.report;
 
 import com.group12.report.data_access.CityDAO;
 import com.group12.report.reports.CityReport;
+import com.group12.report.data_access.CapitalDAO;
+import com.group12.report.reports.CapitalReport;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -52,7 +55,11 @@ public class App {
 
             app.connect(url, user, pass);
 
+            //capital report
+            CapitalDAO capitalDAO = new CapitalDAO(app.con);
+            CapitalReport capitalReport = new CapitalReport(10); // show top 10 per report
 
+            capitalReport.printCategory("Capital Report");
             //city report
             CityDAO cityDAO = new CityDAO(app.con);
 // Create the data-access object using the existing DB connection from 'app'.
@@ -95,6 +102,16 @@ public class App {
             );
 // Filter by country name = 'Myanmar' (no DB limit), then display top 10.
 // Ensure 'Myanmar' matches the Country.Name value in your dataset.
+
+        } catch (Exception e) {
+            System.err.println("Startup error: " + e.getMessage());
+        } finally {
+            app.disconnect();
+        }
+            capitalReport.displayCapitals(capitalDAO.getAllCapitalsByPopulation(null), "9.All Capital Cities in the World Organized by Population (Largest to Smallest)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByContinent("Asia", null), "10.All Capital Cities in A Continent Organized by Population (Asia)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByRegion("Southeast Asia", null), "11.All Capital Cities in A Region Organized by Population (Southeast Asia)");
+
 
         } catch (Exception e) {
             System.err.println("Startup error: " + e.getMessage());
