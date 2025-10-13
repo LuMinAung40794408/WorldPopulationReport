@@ -1,8 +1,7 @@
 package com.group12.report;
 
-import com.group12.report.data_access.CountryDAO;
-import com.group12.report.reports.CountryReport;
-
+import com.group12.report.data_access.CityDAO;
+import com.group12.report.reports.CityReport;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -46,37 +45,56 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         try {
-            // Get database connection details from environment variables if they exist.
-            // If not found, use the default values provided here.
             String url = System.getenv().getOrDefault("DB_URL",
                     "jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false");
             String user = System.getenv().getOrDefault("DB_USER", "root");
             String pass = System.getenv().getOrDefault("DB_PASS", "example");
 
-            // Connect to the MySQL database using the info above.
             app.connect(url, user, pass);
 
-            // === COUNTRY REPORT SECTION ===
 
-            // Create a new CountryDAO object (this handles talking to the database)
-            CountryDAO dao = new CountryDAO(app.con);
+            //city report
+            CityDAO cityDAO = new CityDAO(app.con);
+// Create the data-access object using the existing DB connection from 'app'.
 
-            // Create a CountryReport object to display results in a table format.
-            // The number (10) means: show only the top 10 results for each report.
-            CountryReport countryReport = new CountryReport(10);
+            CityReport cityReport = new CityReport(10); // show only top 10 cities per report
+// Configure the report to display at most 10 rows per section in the console.
 
-            // Print a simple header for the country report section
-            countryReport.printCategory("Country Report");
+            cityReport.printCategory("City Report");
+// Print a banner/header for the City Report section.
 
-            // Show all countries in the world sorted by population (largest to smallest)
-            countryReport.displayCountries(dao.getAllCountriesByPopulation(null), "1.All countries in the world organized by largest to smallest population");
+            cityReport.displayCities(
+                    cityDAO.getAllCitiesByPopulation(null),
+                    "4.All Cities in the World Organized by Largest to Smallest Population"
+            );
+// Query all cities (no DB limit applied because null), then print the top 10 per CityReport.
 
-            // Show all countries in a specific continent (here: Asia) sorted by population
-            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
+            cityReport.displayCities(
+                    cityDAO.getCitiesByContinent("Asia", null),
+                    "5.All Cities in Asia Organized by Largest to Smallest Population(Asia)"
+            );
+// Filter by continent = 'Asia' in the DB (no DB limit), then display top 10.
 
-            //Show all countries in a specific region (here: Southeast Asia) sorted by population
-            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia) ");
+            cityReport.displayCities(
+                    cityDAO.getCitiesByRegion("Southeast Asia", null),
+                    "6.All Cities in Southeast Asia Organized by Largest to Smallest Population(Southeast Asia"
+            );
+// Filter by region = 'Southeast Asia' (no DB limit), then display top 10.
 
+
+            cityReport.displayCities(
+                    cityDAO.getCitiesByDistrict("California", null),
+                    "7.All Cities in California Organized by Largest to Smallest Population(California)"
+            );
+// Filter by city.district = 'California' (no DB limit), then display top 10.
+// Works with the MySQL 'world' sample where many CA cities use district 'California'.
+
+            cityReport.displayCities(
+                    cityDAO.getCitiesByCountry("Myanmar", null),
+                    "8.All Cities in Myanmar Organized by Largest to Smallest Population(Myanmar)"
+            );
+// Filter by country name = 'Myanmar' (no DB limit), then display top 10.
+// Ensure 'Myanmar' matches the Country.Name value in your dataset.
 
         } catch (Exception e) {
             System.err.println("Startup error: " + e.getMessage());
