@@ -54,69 +54,63 @@ public class App {
             String pass = System.getenv().getOrDefault("DB_PASS", "example");
 
             app.connect(url, user, pass);
-
-            //capital report
-            CapitalDAO capitalDAO = new CapitalDAO(app.con);
-            CapitalReport capitalReport = new CapitalReport(10); // show top 10 per report
-
-            capitalReport.printCategory("Capital Report");
             //city report
             CityDAO cityDAO = new CityDAO(app.con);
-// Create the data-access object using the existing DB connection from 'app'.
+            // Create the data-access object using the existing DB connection from 'app'.
 
             CityReport cityReport = new CityReport(10); // show only top 10 cities per report
-// Configure the report to display at most 10 rows per section in the console.
+            // Configure the report to display at most 10 rows per section in the console.
 
             cityReport.printCategory("City Report");
-// Print a banner/header for the City Report section.
+            // Print a banner/header for the City Report section.
 
             cityReport.displayCities(
                     cityDAO.getAllCitiesByPopulation(null),
                     "4.All Cities in the World Organized by Largest to Smallest Population"
             );
-// Query all cities (no DB limit applied because null), then print the top 10 per CityReport.
+            // Query all cities (no DB limit applied because null), then print the top 10 per CityReport.
 
             cityReport.displayCities(
                     cityDAO.getCitiesByContinent("Asia", null),
                     "5.All Cities in Asia Organized by Largest to Smallest Population(Asia)"
             );
-// Filter by continent = 'Asia' in the DB (no DB limit), then display top 10.
+            // Filter by continent = 'Asia' in the DB (no DB limit), then display top 10.
 
             cityReport.displayCities(
                     cityDAO.getCitiesByRegion("Southeast Asia", null),
                     "6.All Cities in Southeast Asia Organized by Largest to Smallest Population(Southeast Asia"
             );
-// Filter by region = 'Southeast Asia' (no DB limit), then display top 10.
+            // Filter by region = 'Southeast Asia' (no DB limit), then display top 10.
 
 
             cityReport.displayCities(
                     cityDAO.getCitiesByDistrict("California", null),
                     "7.All Cities in California Organized by Largest to Smallest Population(California)"
             );
-// Filter by city.district = 'California' (no DB limit), then display top 10.
-// Works with the MySQL 'world' sample where many CA cities use district 'California'.
+            // Filter by city.district = 'California' (no DB limit), then display top 10.
+            // Works with the MySQL 'world' sample where many CA cities use district 'California'.
 
             cityReport.displayCities(
                     cityDAO.getCitiesByCountry("Myanmar", null),
                     "8.All Cities in Myanmar Organized by Largest to Smallest Population(Myanmar)"
             );
-// Filter by country name = 'Myanmar' (no DB limit), then display top 10.
-// Ensure 'Myanmar' matches the Country.Name value in your dataset.
+            // Filter by country name = 'Myanmar' (no DB limit), then display top 10.
+            // Ensure 'Myanmar' matches the Country.Name value in your dataset.
 
-        } catch (Exception e) {
-            System.err.println("Startup error: " + e.getMessage());
-        } finally {
-            app.disconnect();
-        }
+            //capital report
+            CapitalDAO capitalDAO = new CapitalDAO(app.con);
+            CapitalReport capitalReport = new CapitalReport(10); // show top 10 per report
+
+            capitalReport.printCategory("Capital Report");
             capitalReport.displayCapitals(capitalDAO.getAllCapitalsByPopulation(null), "9.All Capital Cities in the World Organized by Population (Largest to Smallest)");
             capitalReport.displayCapitals(capitalDAO.getCapitalsByContinent("Asia", null), "10.All Capital Cities in A Continent Organized by Population (Asia)");
             capitalReport.displayCapitals(capitalDAO.getCapitalsByRegion("Southeast Asia", null), "11.All Capital Cities in A Region Organized by Population (Southeast Asia)");
 
-
         } catch (Exception e) {
             System.err.println("Startup error: " + e.getMessage());
         } finally {
             app.disconnect();
         }
+
     }
 }
