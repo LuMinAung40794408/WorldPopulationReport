@@ -46,36 +46,20 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         try {
-            // Get database connection details from environment variables if they exist.
-            // If not found, use the default values provided here.
             String url = System.getenv().getOrDefault("DB_URL",
                     "jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false");
             String user = System.getenv().getOrDefault("DB_USER", "root");
             String pass = System.getenv().getOrDefault("DB_PASS", "example");
 
-            // Connect to the MySQL database using the info above.
             app.connect(url, user, pass);
-
-            // === COUNTRY REPORT SECTION ===
-
-            // Create a new CountryDAO object (this handles talking to the database)
+            //country report
             CountryDAO dao = new CountryDAO(app.con);
+            CountryReport countryReport = new CountryReport(10); // show only top 10 countries per report
 
-            // Create a CountryReport object to display results in a table format.
-            // The number (10) means: show only the top 10 results for each report.
-            CountryReport countryReport = new CountryReport(10);
-
-            // Print a simple header for the country report section
             countryReport.printCategory("Country Report");
-
-            // Show all countries in the world sorted by population (largest to smallest)
             countryReport.displayCountries(dao.getAllCountriesByPopulation(null), "1.All countries in the world organized by largest to smallest population");
-
-            // Show all countries in a specific continent (here: Asia) sorted by population
-            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
-
-            //Show all countries in a specific region (here: Southeast Asia) sorted by population
-            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia) ");
+            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population");
+            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population");
 
 
         } catch (Exception e) {
