@@ -4,24 +4,29 @@ A Java-based DevOps project for generating world population reports using SQL qu
 This system retrieves and displays population data for **countries, cities, regions, and languages**, organized and ranked by population.  
 It demonstrates professional software engineering practices using **Scrum methodology**, **Git branching strategy**, and **continuous integration**.
 
+## Requirements Implementation Status
+
+21 requirements of 32 have been implemented, which is **65.6%**.
+
+> This reflects the current progress of the World Population Report System based on the official project criteria.
 ---
 
 * **Master Build Status** ![Master Build Status](https://img.shields.io/github/actions/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml?branch=master)
 * **Develop Build Status** ![Develop Build Status](https://img.shields.io/github/actions/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml?branch=develop)
 * **License** ![GitHub license](https://img.shields.io/github/license/LuMinAung40794408/WorldPopulationReport)
-* **Release** ![GitHub release (latest by date)](https://img.shields.io/github/v/release/LuMinAung40794408/WorldPopulationReport)
+* **Release** [![Releases](https://img.shields.io/github/release/LuMinAung40794408/WorldPopulationReport/all.svg?style=flat-square)](https://github.com/LuMinAung40794408/WorldPopulationReport/releases)
 
 
 ##  Team Members
 
-| Student ID | Name | Role          | Feature Responsibility              |
-|-------------|------|---------------|-------------------------------------|
-| **40794408** | Lu Min Aung | Scrum Master / Developer | Population Report / Git Management  |
-| **40794418** | Yu Ya Ko Ko | Developer     | Language Report / Use Case          |
-| **40794444** | Phone Myat Kyaw | Developer     | City Report / Queries               |
-| **40779661** | Ann Min Nyo | Product Owner / Developer | Population Report / Backlog and Sprint |
-| **40794512** | Zayar Than Htike | Developer / Tester | Capital Report / Testing and Documentation |
-| **40794374** | Thu Ta Minn Lu | Developer     | Country Report / Plant UML          |
+| Student ID | Name                                                        | Role          | Feature Responsibility              |
+|-------------|-------------------------------------------------------------|---------------|-------------------------------------|
+| **40794408** | [Lu Min Aung](https://github.com/LuMinAung40794408)         | Scrum Master / Developer | Population Report / Git Management  |
+| **40794418** | [Yu Ya Ko Ko](https://github.com/40794418yuyakoko)          | Developer     | Language Report / Use Case          |
+| **40794444** | [Phone Myat Kyaw](https://github.com/40794444PhoneMyatKyaw) | Developer     | City Report / Queries               |
+| **40779661** | [Ann Min Nyo](https://github.com/40779661AnnMinNyo)         | Product Owner / Developer | Population Report / Backlog and Sprint |
+| **40794512** | [Zayar Than Htike](https://github.com/ZayarThanHtike-stu)   | Developer / Tester | Capital Report / Testing and Documentation |
+| **40794374** | [Thu Ta Minn Lu](https://github.com/ThuTaMinnLu40794374)    | Developer     | Country Report / Plant UML          |
 
 
 ### Branching Strategy
@@ -148,16 +153,7 @@ git commit -m "Add Capital Population Report feature"
 
 ---
 
-## Step 4: Implement and Test Your Changes
-
-1. Follow the project’s **Java coding conventions**.
-2. Write **meaningful comments** and maintain code readability.
-3. Test your code locally to ensure it works correctly.
-4. Ensure **unit tests pass** before moving forward.
-
----
-
-## Step 5: Push Your Branch to GitHub
+## Step 4: Push Your Branch to GitHub
 
 ```bash
 git push origin feature/<your-feature-name>
@@ -165,7 +161,7 @@ git push origin feature/<your-feature-name>
 
 ---
 
-## Step 6: Submit a Pull Request (PR)
+## Step 5: Submit a Pull Request (PR)
 
 1. Go to GitHub and create a **PR from your feature branch to `develop`**.
 2. Include a **clear title and description**:
@@ -177,7 +173,7 @@ git push origin feature/<your-feature-name>
 
 ---
 
-## Step 7: Review and Merge
+## Step 6: Review and Merge
 
 1. Address any **feedback** or requested changes.
 2. Once approved, **merge the PR into `develop`**.
@@ -190,7 +186,7 @@ git push origin --delete feature/<your-feature-name>
 
 ---
 
-## Step 8: Update Your Local Branch
+## Step 7: Update Your Local Branch
 
 After merging, sync your local `develop` branch:
 
@@ -201,7 +197,7 @@ git pull origin develop
 
 ---
 
-## Step 9: Follow the Code of Conduct
+## Step 8: Follow the Code of Conduct
 
 * Maintain professional and respectful communication.
 * Ask questions or clarify requirements early.
@@ -209,9 +205,25 @@ git pull origin develop
 
 ---
 
-✅ Following these steps ensures **smooth collaboration, high-quality code, and successful project delivery**.
+ Following these steps ensures **smooth collaboration, high-quality code, and successful project delivery**.
 
 
 ## Code of Conduct
 
 Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand the standards and expectations for team collaboration and communication.
+
+## Individual Contribution Spreadsheet
+
+Each team member is required to submit their final contribution record. This includes participation in code reviews and implementation tasks. 
+
+| Matriculation Number | Code Review 1 | Code Review 2 |
+|----------------------|---------------|---------------|
+| 40794408             | 20            | -             |
+| 40779661             | 20            | -             |
+| 40794418             | 15            | -             |
+| 40794444             | 15            | -             |
+| 40794374             | 15            | -             |
+| 40794512             | 15            | -             |
+| **Total**            | **100**       | **-**         |
+
+> This table ensures transparency and accountability across the team 
