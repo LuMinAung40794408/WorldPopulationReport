@@ -1,5 +1,6 @@
 package com.group12.report.models;
 /**
+ *  @author 40779661 Ann Min Nyo
  * Represents population data at various geographic levels,
  * such as the world, continent, region, country, city, or district.
  *
