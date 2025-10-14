@@ -1,0 +1,126 @@
+@startuml
+'================ STYLE SETTINGS ================
+top to bottom direction
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam ArrowColor black
+skinparam ArrowThickness 1
+skinparam ArrowFontColor black
+skinparam ArrowFontSize 8
+skinparam ArrowFontStyle bold
+
+skinparam dpi 150
+skinparam defaultFontSize 9
+skinparam Padding 2
+
+skinparam rectangle {
+  BorderColor black
+  FontColor black
+}
+
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+}
+
+skinparam actor {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+  FontStyle bold
+}
+
+'================ ACTORS =================
+actor "User" as User
+
+'================ DATABASE =================
+database "Database" as DB
+
+'================ SYSTEM BOUNDARY =================
+rectangle "Population Information Reporting System" as System {
+
+  '========== MAIN USE CASES ==========
+  usecase "Generate\nCountry Reports" as UC_Country
+  usecase "Generate\nCity Reports" as UC_City
+  usecase "Generate\nCapital City Reports" as UC_Capital
+  usecase "Generate\nPopulation Reports" as UC_Pop
+  usecase "Generate\nLanguage Reports" as UC_Lang
+
+  '========== REPORT SECTIONS HORIZONTALLY ==========
+
+  rectangle "Country Reports" as CG {
+    usecase "Top N\n(World)" as UC4
+    usecase "Top N by Continent" as UC5
+    usecase "Top N by Region" as UC6
+    usecase "All Countries\n(largest to smallest)" as UC1
+    usecase "By Continent\n(largest to smallest)" as UC2
+    usecase "By Region\n(largest to smallest)" as UC3
+  }
+
+  rectangle "City Reports" as CTG {
+    usecase "All Cities\n(largest to smallest)" as UC7
+    usecase "By Continent\n(largest to smallest)" as UC8
+    usecase "By Region\n(largest to smallest)" as UC9
+    usecase "By Country\n(largest to smallest)" as UC10
+    usecase "By District\n(largest to smallest)" as UC11
+    usecase "Top N\n(World)" as UC12
+    usecase "Top N by Continent" as UC13
+    usecase "Top N by Region" as UC14
+    usecase "Top N by Country" as UC15
+    usecase "Top N by District" as UC16
+  }
+
+  rectangle "Population Reports" as PG {
+    usecase "For Continent\n(living & not living in cities)" as UC27
+    usecase "For Region\n(living & not living in cities)" as UC28
+    usecase "By Continent" as UC23
+    usecase "By Region" as UC24
+    usecase "By Country" as UC25
+    usecase "The World" as UC26
+    usecase "By District" as UC30
+    usecase "By City" as UC31
+    usecase "For Country\n(living & not living in cities)" as UC29
+  }
+
+  rectangle "Capital City Reports" as CCG {
+      usecase "All Capital Cities\n(largest to smallest)" as UC17
+      usecase "By Continent\n(largest to smallest)" as UC18
+      usecase "By Region\n(largest to smallest)" as UC19
+      usecase "Top N\n(World)" as UC20
+      usecase "Top N by Continent" as UC21
+      usecase "Top N by Region" as UC22
+    }
+
+
+  rectangle "Language Reports" as LG {
+    usecase "Languages from greatest to smallest:\nChinese, English, Hindi, Spanish, Arabic" as UC32
+  }
+
+  '========== INCLUDE RELATIONSHIPS ==========
+  UC_Country ..> CG : <<include>>
+  UC_City ..> CTG : <<include>>
+  UC_Capital ..> CCG : <<include>>
+  UC_Pop ..> PG : <<include>>
+  UC_Lang ..> LG : <<include>>
+
+  '========== DATABASE CONNECTION ==========
+  usecase "Get World\nPopulation Data" as UC_View
+  CG ..down..> UC_View : <<include>>
+  CTG ..down..> UC_View : <<include>>
+  CCG ..down..> UC_View : <<include>>
+  PG ..down..> UC_View
+  LG ..down..> UC_View : <<include>>
+  UC_View -- DB : <<data access>>
+}
+
+'========== USER CONNECTIONS ==========
+User -- UC_Country
+User -- UC_City
+User -- UC_Capital
+User -- UC_Pop
+User -- UC_Lang
+
+@enduml
