@@ -51,3 +51,8 @@ public class Country {
     public Integer getCapitalId() {
         return capitalId;
     }
+
+    public String getCapitalName() {
+        return capitalName;
+    }
+}
