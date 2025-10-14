@@ -155,5 +155,5 @@ As a Developer, I need to allow users to view top N countries by region.
 - Data source error → show error message.
 - No records found → show 'No data available.'
 
-**Sub-Variations:** None
-**Schedule:** Due Date – Version 2.0
+***Sub-Variations:*** None
+***Schedule:*** Due Date – Version 2.0
