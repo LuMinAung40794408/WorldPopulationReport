@@ -11,7 +11,7 @@ All participants, regardless of role, are expected to contribute positively to t
 - Ensure accountability, fairness, and respect among members.
 - Promote high standards of software quality and academic integrity.
 - Support an inclusive, professional environment where all contributions are valued.
-- 
+
 ## Our Standards
 Examples of positive behavior include:
 - Using respectful and inclusive language
@@ -52,8 +52,8 @@ Project maintainers are responsible for clarifying the standards of acceptable b
 ---
 
 ## Enforcement
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the **Scrum Master (Lu Min Aung)** at:  
-📧 lumin.aung@mitgroup.edu.mm
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the **Scrum Master** [Lu Min Aung](https://github.com/LuMinAung40794408) :  
+
 
 All complaints will be reviewed and handled with fairness and confidentiality.
 

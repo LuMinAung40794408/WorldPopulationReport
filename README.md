@@ -211,19 +211,3 @@ git pull origin develop
 ## Code of Conduct
 
 Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand the standards and expectations for team collaboration and communication.
-
-## Individual Contribution Spreadsheet
-
-Each team member is required to submit their final contribution record. This includes participation in code reviews and implementation tasks. 
-
-| Matriculation Number | Code Review 1 | Code Review 2 |
-|----------------------|---------------|---------------|
-| 40794408             | 20            | -             |
-| 40779661             | 20            | -             |
-| 40794418             | 15            | -             |
-| 40794444             | 15            | -             |
-| 40794374             | 15            | -             |
-| 40794512             | 15            | -             |
-| **Total**            | **100**       | **-**         |
-
-> This table ensures transparency and accountability across the team 
