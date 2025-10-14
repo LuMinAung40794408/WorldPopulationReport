@@ -133,3 +133,139 @@ As a Developer, I need to generate a report showing cities in a country by popul
 **Sub-Variations:** None
 **Schedule:** Due Date – Version 1.0
 
+# City Reports (Version 2)
+
+## USE CASE: Top N Populated Cities in the World
+
+**Goal in Context:**  
+As a Developer, I must create a function for top N cities globally.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** City tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Invalid input or no data found.  
+**Primary Actor:** Developer  
+**Trigger:** User selects the Top N City Report feature to display the most populated cities globally.
+
+**Main Success Scenario:**
+- The City Report feature provides a comprehensive list of cities organized by population size.
+- The report presents city name, country, district, and population count for better comparison.
+- This information supports the organization in urban analysis, infrastructure planning, and resource allocation.
+
+**Extensions:**
+- Data source error → show error message.
+- No city records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Cities in a Continent
+
+**Goal in Context:**  
+As a Developer, I need to show top N cities in each continent.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** City tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Invalid input or no data found.  
+**Primary Actor:** Developer  
+**Trigger:** User runs the Top N City Report to view major populated cities in each continent.
+
+**Main Success Scenario:**
+- The City Report feature provides a comprehensive list of cities organized by population size.
+- The report presents city name, country, district, and population count for better comparison.
+- This information supports the organization in urban analysis, infrastructure planning, and resource allocation.
+
+**Extensions:**
+- Data source error → show error message.
+- No city records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Cities in a Region
+
+**Goal in Context:**  
+As a Developer, I must display top N cities per region.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** City tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Invalid input or no data found.  
+**Primary Actor:** Developer  
+**Trigger:** User triggers the Top N City Report feature to list top populated cities per region.
+
+**Main Success Scenario:**
+- The City Report feature provides a comprehensive list of cities organized by population size.
+- The report presents city name, country, district, and population count for better comparison.
+- This information supports the organization in urban analysis, infrastructure planning, and resource allocation.
+
+**Extensions:**
+- Data source error → show error message.
+- No city records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Cities in a Country
+
+**Goal in Context:**  
+As a Developer, I must allow viewing of top N cities per country.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** City tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Invalid input or no data found.  
+**Primary Actor:** Developer  
+**Trigger:** User selects the Top N City Report feature to generate the most populated cities in a country.
+
+**Main Success Scenario:**
+- The City Report feature provides a comprehensive list of cities organized by population size.
+- The report presents city name, country, district, and population count for better comparison.
+- This information supports the organization in urban analysis, infrastructure planning, and resource allocation.
+
+**Extensions:**
+- Data source error → show error message.
+- No city records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Cities in a District
+
+**Goal in Context:**  
+As a Developer, I should provide a list of top N cities in each district.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** City tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Invalid input or no data found.  
+**Primary Actor:** Developer  
+**Trigger:** User activates the Top N City Report to see the highest populated cities in a district.
+
+**Main Success Scenario:**
+- The City Report feature provides a comprehensive list of cities organized by population size.
+- The report presents city name, country, district, and population count for better comparison.
+- This information supports the organization in urban analysis, infrastructure planning, and resource allocation.
+
+**Extensions:**
+- Data source error → show error message.
+- No city records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+
