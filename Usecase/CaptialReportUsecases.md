@@ -79,4 +79,85 @@ As a Developer, I need to build a report for capital cities by region.
 **Sub-Variations:** None
 **Schedule:** Due Date – Version 1.0
 
+# Capital City Reports (Version 2)
+
+## USE CASE: Top N Populated Capital Cities in the World
+
+**Goal in Context:**  
+As a Developer, I must enable the top N capital city list globally.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** Capital city tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Database failure or missing data.  
+**Primary Actor:** Developer  
+**Trigger:** User triggers the Top N Capital City Report feature to display the world’s largest capital cities.
+
+**Main Success Scenario:**
+- The Capital City Report feature compiles a complete list of capital cities sorted by population size.
+- The report includes capital name, associated country, and total population values.
+- The data enables the organization to assess national development and focus on urban growth strategies.
+
+**Extensions:**
+- Data source error → display error message.
+- No capital records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Capital Cities in a Continent
+
+**Goal in Context:**  
+As a Developer, I need to show top N capital cities in each continent.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** Capital city tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Database failure or missing data.  
+**Primary Actor:** Developer  
+**Trigger:** User runs the Top N Capital City Report to list the most populated capitals in a continent.
+
+**Main Success Scenario:**
+- The Capital City Report feature compiles a complete list of capital cities sorted by population size.
+- The report includes capital name, associated country, and total population values.
+- The data enables the organization to assess national development and focus on urban growth strategies.
+
+**Extensions:**
+- Data source error → display error message.
+- No capital records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Capital Cities in a Region
+
+**Goal in Context:**  
+As a Developer, I must provide a feature to list top N capitals in a region.
+
+**Scope:** Population Report System  
+**Level:** Subfunction Task  
+**Preconditions:** Capital city tables available and accessible.  
+**Success End Condition:** Sorted report is shown or exported.  
+**Failed End Condition:** Database failure or missing data.  
+**Primary Actor:** Developer  
+**Trigger:** User initiates the Top N Capital City Report feature to view top capitals in a region.
+
+**Main Success Scenario:**
+- The Capital City Report feature compiles a complete list of capital cities sorted by population size.
+- The report includes capital name, associated country, and total population values.
+- The data enables the organization to assess national development and focus on urban growth strategies.
+
+**Extensions:**
+- Data source error → display error message.
+- No capital records found → show 'No data available.'
+
+**Sub-Variations:** None  
+**Schedule:** Due Date – Version 2.0
+
 
