@@ -39,13 +39,13 @@ It demonstrates professional software engineering practices using **Scrum method
 ### Packages
 - **com.group12.report** -> Main Application Classes
 - **com.group12.report.data_access** -> Accessing Data
-- **com.group12.report.models** -> Data models (Country, City, Capital, Language)
+- **com.group12.report.models** -> Data models (Country, City, Capital, Language, Population)
 - **com.group12.report.reports** -> Displaying Output
 
 ### Features
 - Generate population reports for **Countries, Cities, and Regions**
-- Filter data by **Continent, Region, or Language**
-- Display **top N populated Countries, Capital Cities, Cities, or Regions**
+- Filter data by **Continent, Region and Language**
+- Display ** Populated Countries, Capital Cities, Cities, or Regions**
 - Modular Java design for scalability and maintainability
 - **SQL integration** for accurate real-time data retrieval
 - Supports **multiple report views** (World, Continent, Region, Capital Cities)
@@ -85,7 +85,7 @@ It demonstrates professional software engineering practices using **Scrum method
 ## Usage
 
 1. Launch the application and select the desired report type
-2. Reports can be filtered by desried types.
+2. Reports can be filtered by desired types.
 3. Outputs are displayed in the console with formatted tables
 
 # Contribution Guidelines
