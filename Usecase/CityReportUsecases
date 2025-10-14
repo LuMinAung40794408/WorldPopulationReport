@@ -263,5 +263,5 @@ As a Developer, I should provide a list of top N cities in each district.
 - Data source error → show error message.
 - No city records found → show 'No data available.'
 
-**Sub-Variations:** None
-**Schedule:** Due Date – Version 2.0
+***Sub-Variations:*** None
+***Schedule:*** Due Date – Version 2.0
