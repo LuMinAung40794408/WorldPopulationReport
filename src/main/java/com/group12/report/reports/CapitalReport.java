@@ -4,6 +4,7 @@ import com.group12.report.models.Capital;
 import java.util.List;
 
 /**
+ * @author 40794512 Zayar Than Htike
  * The CapitalReport class is responsible for displaying formatted reports
  * of capital cities based on their population, country, and name.
  *

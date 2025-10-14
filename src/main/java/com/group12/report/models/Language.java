@@ -1,6 +1,7 @@
 package com.group12.report.models;
 
 /**
+ * * @author 40794418yuyakoko
  * Represents a language entity with its global speaker statistics.
  *
  * This model is typically used to store results retrieved from

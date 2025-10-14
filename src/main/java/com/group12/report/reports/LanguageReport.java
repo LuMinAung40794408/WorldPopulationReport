@@ -4,6 +4,7 @@ import com.group12.report.models.Language;
 import java.util.List;
 
 /**
+ * * @author 40794418yuyakoko
  * The {@code LanguageReport} class is responsible for displaying
  * formatted reports of language statistics, including the total number
  * of speakers and percentage of world population.

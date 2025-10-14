@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author 40794418yuyakoko
  * Data Access Object (DAO) class responsible for retrieving
  * language-related information from the database.
  *
