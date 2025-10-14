@@ -79,3 +79,81 @@ As a Developer, I need to generate a report listing countries by region in popul
 **Sub-Variations:** None
 **Schedule:** Due Date – Version 1.0
 
+## USE CASE: Top N Populated Countries in the World
+
+**Goal in Context:**
+As a Developer, I must add a feature to display the top N populated countries worldwide.
+
+**Scope:** Population Report System
+**Level:** Subfunction Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User selects the Top N Country Report feature to view the most populated countries worldwide.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Countries in a Continent
+
+**Goal in Context:**
+As a Developer, I must build a function to show top N countries in a continent.
+
+**Scope:** Population Report System
+**Level:** Subfunction Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User activates the Top N Country Report to view leading populated countries within a continent.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 2.0
+
+---
+
+## USE CASE: Top N Populated Countries in a Region
+
+**Goal in Context:**
+As a Developer, I need to allow users to view top N countries by region.
+
+**Scope:** Population Report System
+**Level:** Subfunction Task
+**Preconditions:** Country data tables available and accessible.
+**Success End Condition:** Sorted report is shown or exported.
+**Failed End Condition:** Report not generated or data missing.
+**Primary Actor:** Developer
+**Trigger:** User triggers the Top N Country Report feature to generate a population ranking by region.
+
+**Main Success Scenario:**
+- The Country Report feature generates a detailed list of countries sorted by population size.
+- The report displays each country's name, continent, region, and population figures in descending order.
+- The results help the organization evaluate global and regional population distributions for planning and analysis.
+
+**Extensions:**
+- Data source error → show error message.
+- No records found → show 'No data available.'
+
+**Sub-Variations:** None
+**Schedule:** Due Date – Version 2.0
