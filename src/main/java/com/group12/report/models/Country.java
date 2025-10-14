@@ -1,5 +1,9 @@
 package com.group12.report.models;
 
+/**
+ * @author 40794374 Thu Ta Minn Lu
+ */
+
 // This class represents a Country record from the database.
 public class Country {
     private final String code;

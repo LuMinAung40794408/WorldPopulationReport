@@ -1,6 +1,7 @@
 package com.group12.report.models;
 
 /**
+ * @author 40794512 Zayar Than Htike
  * The Capital class represents a capital city and its related information.
  * It includes the capital name, its country, and the population.
  *

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author 40779661 Ann Min Nyo
  * Data Access Object (DAO) for handling all population-related queries.
  * This class interacts with the database to retrieve population information
  * for various levels such as world, continent, region, country, district, and city.

@@ -67,8 +67,8 @@ public class App {
 
             countryReport.printCategory("Country Report");
             countryReport.displayCountries(dao.getAllCountriesByPopulation(null), "1.All countries in the world organized by largest to smallest population");
-            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population");
-            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population");
+            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
+            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia)");
 
 
             //city report

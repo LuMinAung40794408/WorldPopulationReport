@@ -5,6 +5,9 @@ import java.sql.*; // Import SQL classes for database access
 import java.util.ArrayList; // Imports ArrayList for storing query results
 import java.util.List; // Imports List interface
 
+/**
+ * @author 40794374 Thu Ta Minn Lu
+ */
 
 // This class handles everything related to fetching country data from the database.
 public class CountryDAO {
