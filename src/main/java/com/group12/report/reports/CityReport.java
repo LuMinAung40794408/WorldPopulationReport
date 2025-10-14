@@ -3,6 +3,9 @@ package com.group12.report.reports;
 import com.group12.report.models.City;
 import java.util.List;
 
+/**
+ * @author 40794374PhoneMyatKyaw
+ */
 public class CityReport {
 
     private final int displayLimit;

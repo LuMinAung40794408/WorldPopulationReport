@@ -1,5 +1,8 @@
 package com.group12.report.models;
 
+/**
+ * @author 40794374PhoneMyatKyaw
+ */
 public class City {
     private final String name;
     // Holds the city's name (e.g., "Yangon").
