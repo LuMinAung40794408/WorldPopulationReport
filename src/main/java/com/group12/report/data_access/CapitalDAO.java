@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author 40794512 Zayar Than Htike
  * Data Access Object (DAO) class for retrieving capital city reports
  * from the world database. This class handles SQL queries related to
  * capital cities, including fetching by population, continent, and region.
