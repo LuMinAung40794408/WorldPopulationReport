@@ -59,5 +59,3 @@ All complaints will be reviewed and handled with fairness and confidentiality.
 
 ---
 
-## Attribution
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
