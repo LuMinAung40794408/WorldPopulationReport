@@ -266,6 +266,6 @@ As a Developer, I should provide a list of top N cities in each district.
 - No city records found → show 'No data available.'
 
 **Sub-Variations:** None  
-**Schedule:** Due Date – Version 2.0
+**Schedule:*** Due Date -– Version 2.0
 
 
