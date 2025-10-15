@@ -19,14 +19,14 @@ It demonstrates professional software engineering practices using **Scrum method
 
 ##  Team Members
 
-| Student ID | Name                                                        | Role          | Feature Responsibility              |
-|-------------|-------------------------------------------------------------|---------------|-------------------------------------|
-| **40794408** | [Lu Min Aung](https://github.com/LuMinAung40794408)         | Scrum Master / Developer | Population Report / Git Management  |
-| **40794418** | [Yu Ya Ko Ko](https://github.com/40794418yuyakoko)          | Developer     | Language Report / Use Case          |
-| **40794444** | [Phone Myat Kyaw](https://github.com/40794444PhoneMyatKyaw) | Developer     | City Report / Queries               |
-| **40779661** | [Ann Min Nyo](https://github.com/40779661AnnMinNyo)         | Product Owner / Developer | Population Report / Backlog and Sprint |
+| Student ID | Name                                                        | Role          | Feature Responsibility                     |
+|-------------|-------------------------------------------------------------|---------------|--------------------------------------------|
+| **40794408** | [Lu Min Aung](https://github.com/LuMinAung40794408)         | Scrum Master / Developer | Queries / Git Management                   |
+| **40794418** | [Yu Ya Ko Ko](https://github.com/40794418yuyakoko)          | Developer     | Language Report / Use Case                 |
+| **40794444** | [Phone Myat Kyaw](https://github.com/40794444PhoneMyatKyaw) | Developer     | City Report / Queries                      |
+| **40779661** | [Ann Min Nyo](https://github.com/40779661AnnMinNyo)         | Product Owner / Developer | Population Report / Backlog and Sprint     |
 | **40794512** | [Zayar Than Htike](https://github.com/ZayarThanHtike-stu)   | Developer / Tester | Capital Report / Testing and Documentation |
-| **40794374** | [Thu Ta Minn Lu](https://github.com/ThuTaMinnLu40794374)    | Developer     | Country Report / Plant UML          |
+| **40794374** | [Thu Ta Minn Lu](https://github.com/ThuTaMinnLu40794374)    | Developer     | Country Report / Plant UML                 |
 
 
 ### Branching Strategy
