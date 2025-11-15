@@ -70,7 +70,6 @@ public class App {
             countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
             countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia)");
 
-
             //city report
             CityDAO cityDAO = new CityDAO(app.con);
             // Create the data-access object using the existing DB connection from 'app'.
