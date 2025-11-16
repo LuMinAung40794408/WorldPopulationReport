@@ -87,6 +87,88 @@ public class CityDAO {
         // Execute with parameter binding and return mapped results.
     }
 
+    // ======================== TOP 10 CITY REPORTS (WITH SQL) ========================
+
+    /**
+     * Top 10 cities in the world.
+     */
+    public List<City> getTop10CitiesInWorld() {
+        String sql = """
+        SELECT ci.Name, co.Name AS Country, ci.District, ci.Population
+        FROM city ci
+        JOIN country co ON co.Code = ci.CountryCode
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCityQuery(sql);
+    }
+
+    /**
+     * Top 10 cities in a continent (hard-coded: Asia)
+     */
+    public List<City> getTop10CitiesInContinent() {
+        String sql = """
+        SELECT ci.Name, co.Name AS Country, ci.District, ci.Population
+        FROM city ci
+        JOIN country co ON co.Code = ci.CountryCode
+        WHERE co.Continent = 'Asia'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCityQuery(sql);
+    }
+
+    /**
+     * Top 10 cities in a region (hard-coded: Southeast Asia)
+     */
+    public List<City> getTop10CitiesInRegion() {
+        String sql = """
+        SELECT ci.Name, co.Name AS Country, ci.District, ci.Population
+        FROM city ci
+        JOIN country co ON co.Code = ci.CountryCode
+        WHERE co.Region = 'Southeast Asia'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCityQuery(sql);
+    }
+
+    /**
+     * Top 10 cities in a country (hard-coded: Myanmar)
+     */
+    public List<City> getTop10CitiesInCountry() {
+        String sql = """
+        SELECT ci.Name, co.Name AS Country, ci.District, ci.Population
+        FROM city ci
+        JOIN country co ON co.Code = ci.CountryCode
+        WHERE co.Name = 'Myanmar'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCityQuery(sql);
+    }
+
+    /**
+     * Top 10 cities in a district (hard-coded: California)
+     */
+    public List<City> getTop10CitiesInDistrict() {
+        String sql = """
+        SELECT ci.Name, co.Name AS Country, ci.District, ci.Population
+        FROM city ci
+        JOIN country co ON co.Code = ci.CountryCode
+        WHERE ci.District = 'California'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCityQuery(sql);
+    }
+
+
     // Shared logic
     private List<City> fetchCities(String sql, Integer limit, String... param) {
         List<City> out = new ArrayList<>();
@@ -124,5 +206,27 @@ public class CityDAO {
 
         return out;
         // Return the collected results (possibly empty on error or no matches).
+    }
+
+    private List<City> executeFixedCityQuery(String sql) {
+        List<City> out = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                out.add(new City(
+                        rs.getString("Name"),
+                        rs.getString("Country"),
+                        rs.getString("District"),
+                        rs.getLong("Population")
+                ));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Failed to execute Top10 City query: " + e.getMessage());
+        }
+
+        return out;
     }
 }

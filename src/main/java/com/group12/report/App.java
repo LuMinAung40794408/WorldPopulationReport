@@ -101,26 +101,26 @@ public class App {
             // Query all cities (no DB limit applied because null), then print the top 10 per CityReport.
             cityReport.displayCities(
                     cityDAO.getAllCitiesByPopulation(null),
-                    "4.All Cities in the World Organized by Largest to Smallest Population"
+                    "7.All Cities in the World Organized by Largest to Smallest Population"
             );
 
             // Filter by continent = 'Asia' in the DB (no DB limit), then display top 10.
             cityReport.displayCities(
                     cityDAO.getCitiesByContinent("Asia", null),
-                    "5.All Cities in Asia Organized by Largest to Smallest Population(Asia)"
+                    "8.All Cities in Asia Organized by Largest to Smallest Population(Asia)"
             );
 
             // Filter by region = 'Southeast Asia' (no DB limit), then display top 10.
             cityReport.displayCities(
                     cityDAO.getCitiesByRegion("Southeast Asia", null),
-                    "6.All Cities in Southeast Asia Organized by Largest to Smallest Population(Southeast Asia"
+                    "9.All Cities in Southeast Asia Organized by Largest to Smallest Population(Southeast Asia"
             );
 
             // Filter by city.district = 'California' (no DB limit), then display top 10
             // Works with the MySQL 'world' sample where many CA cities use district 'California'.
             cityReport.displayCities(
                     cityDAO.getCitiesByDistrict("California", null),
-                    "7.All Cities in California Organized by Largest to Smallest Population(California)"
+                    "10.All Cities in California Organized by Largest to Smallest Population(California)"
             );
 
             // Filter by country name = 'Myanmar' (no DB limit), then display top 10.
@@ -128,7 +128,35 @@ public class App {
             // Define a list of specific languages to be included in the report.
             cityReport.displayCities(
                     cityDAO.getCitiesByCountry("Myanmar", null),
-                    "8.All Cities in Myanmar Organized by Largest to Smallest Population(Myanmar)"
+                    "11.All Cities in Myanmar Organized by Largest to Smallest Population(Myanmar)"
+            );
+
+            // ==================== TOP 10 CITY REPORTS (NEW) ====================
+
+
+            cityReport.displayCities(
+                    cityDAO.getTop10CitiesInWorld(),
+                    "12.Top 10 Populated Cities in the World"
+            );
+
+            cityReport.displayCities(
+                    cityDAO.getTop10CitiesInContinent(),
+                    "13.Top 10 Populated Cities in a Continent (Asia)"
+            );
+
+            cityReport.displayCities(
+                    cityDAO.getTop10CitiesInRegion(),
+                    "14.Top 10 Populated Cities in a Region (Southeast Asia)"
+            );
+
+            cityReport.displayCities(
+                    cityDAO.getTop10CitiesInCountry(),
+                    "15.Top 10 Populated Cities in a Country (Myanmar)"
+            );
+
+            cityReport.displayCities(
+                    cityDAO.getTop10CitiesInDistrict(),
+                    "16.Top 10 Populated Cities in a District (California)"
             );
 
             //capital report
