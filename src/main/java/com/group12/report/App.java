@@ -192,21 +192,21 @@ public class App {
             popReport.printCategory("Population Report");
 
             // 1–4: Breakdown reports
-            popReport.displayPopulations(popDAO.getWorldPopulation(), "12.Population of the World");
-            popReport.displayPopulations(popDAO.getPopulationByContinent(), "13.Population of Each Continent");
-            popReport.displayPopulations(popDAO.getPopulationByRegion(), "14.Population of Each Region");
-            popReport.displayPopulations(popDAO.getPopulationByCountry(), "15.Population of Each Country");
+            popReport.displayPopulations(popDAO.getWorldPopulation(), "23.Population of the World");
+            popReport.displayPopulations(popDAO.getPopulationByContinent(), "24.Population of Each Continent");
+            popReport.displayPopulations(popDAO.getPopulationByRegion(), "25.Population of Each Region");
+            popReport.displayPopulations(popDAO.getPopulationByCountry(), "26.Population of Each Country");
 
             // 5: District population (filtered by country)
-            popReport.displayDistrictPopulations(popDAO.getPopulationByDistrict("Myanmar"), "16.Population of Each District in Myanmar");
+            popReport.displayDistrictPopulations(popDAO.getPopulationByDistrict("Myanmar"), "17.Population of Each District in Myanmar");
 
             // 6: City population
-            popReport.displayCityPopulations(popDAO.getPopulationByCity(), "17.Population of Each City");
+            popReport.displayCityPopulations(popDAO.getPopulationByCity(), "28.Population of Each City");
 
             // New city vs non-city breakdowns
-            popReport.displayPopulations(popDAO.getCityVsNonCityByContinent(), "18.City vs Non-City Population by Continent");
-            popReport.displayPopulations(popDAO.getCityVsNonCityByRegion(), "19.City vs Non-City Population by Region");
-            popReport.displayPopulations(popDAO.getCityVsNonCityByCountry(), "20.City vs Non-City Population by Country");
+            popReport.displayPopulations(popDAO.getCityVsNonCityByContinent(), "29.City vs Non-City Population by Continent");
+            popReport.displayPopulations(popDAO.getCityVsNonCityByRegion(), "30.City vs Non-City Population by Region");
+            popReport.displayPopulations(popDAO.getCityVsNonCityByCountry(), "31.City vs Non-City Population by Country");
 
             // ==================== LANGUAGE REPORT SECTION ====================
 
