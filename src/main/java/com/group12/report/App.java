@@ -18,6 +18,7 @@ import java.util.List;
 
 public class App {
     private Connection con;
+
     public void connect(String url, String user, String pass) throws InterruptedException {
         int maxRetries = 10;
         int retryDelay = 10000; // 3 seconds
@@ -135,9 +136,26 @@ public class App {
             CapitalReport capitalReport = new CapitalReport(10); // show top 10 per report
 
             capitalReport.printCategory("Capital Report");
-            capitalReport.displayCapitals(capitalDAO.getAllCapitalsByPopulation(null), "9.All Capital Cities in the World Organized by Population (Largest to Smallest)");
-            capitalReport.displayCapitals(capitalDAO.getCapitalsByContinent("Asia", null), "10.All Capital Cities in A Continent Organized by Population (Asia)");
-            capitalReport.displayCapitals(capitalDAO.getCapitalsByRegion("Southeast Asia", null), "11.All Capital Cities in A Region Organized by Population (Southeast Asia)");
+            capitalReport.displayCapitals(capitalDAO.getAllCapitalsByPopulation(null), "17.All Capital Cities in the World Organized by Population (Largest to Smallest)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByContinent("Asia", null), "18.All Capital Cities in A Continent Organized by Population (Asia)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByRegion("Southeast Asia", null), "19.All Capital Cities in A Region Organized by Population (Southeast Asia)");
+
+            // ==================== TOP 10 CAPITAL CITY REPORTS (NEW) ====================
+            capitalReport.displayCapitals(
+                    capitalDAO.getTop10CapitalsInWorld(),
+                    "20. Top 10 Populated Capital Cities in the World"
+            );
+
+            capitalReport.displayCapitals(
+                    capitalDAO.getTop10CapitalsInContinent(),
+                    "21. Top 10 Populated Capital Cities in a Continent (Asia)"
+            );
+
+            capitalReport.displayCapitals(
+                    capitalDAO.getTop10CapitalsInRegion(),
+                    "22. Top 10 Populated Capital Cities in a Region (Southeast Asia)"
+            );
+
 
             //population report
             PopulationDAO popDAO = new PopulationDAO(app.con);
@@ -191,8 +209,5 @@ public class App {
         } finally {
             app.disconnect();
         }
-
-        // Print the category heading for the language report.
-
     }
 }
