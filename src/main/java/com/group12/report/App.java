@@ -61,6 +61,22 @@ public class App {
             countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
             countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia)");
 
+            // ==================== TOP 10 COUNTRY REPORTS (NEW) ====================
+
+            countryReport.displayCountries(
+                    dao.getTop10CountriesInWorld(),
+                    "4. Top 10 populated countries in the world"
+            );
+
+            countryReport.displayCountries(
+                    dao.getTop10CountriesInEurope(),
+                    "5. Top 10 populated countries in a continent (Europe)"
+            );
+
+            countryReport.displayCountries(
+                    dao.getTop10CountriesInWesternEurope(),
+                    "6. Top 10 populated countries in a region (Western Europe)"
+            );
 
         } catch (Exception e) {
             System.err.println("Startup error: " + e.getMessage());
