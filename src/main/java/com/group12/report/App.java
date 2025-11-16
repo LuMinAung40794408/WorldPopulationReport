@@ -230,8 +230,12 @@ public class App {
             // - Passes that data to LanguageReport.displayLanguages(...) for formatted output.
             languageReport.displayLanguages(
                     languageDAO.getLanguagesBySpeakerCount(langs),
-                    "21.Languages by Number of Speakers (English, Chinese, Hindi, Spanish, Arabic)"
+                    "32.Languages by Number of Speakers (English, Chinese, Hindi, Spanish, Arabic)"
             );
+
+            // =================================================================
+
+            // Add similar calls for continent, region, country, district, city, and city-vs-noncity breakdowns
         } catch (Exception e) {
             System.err.println("Startup error: " + e.getMessage());
         } finally {
