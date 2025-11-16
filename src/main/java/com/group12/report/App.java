@@ -74,7 +74,7 @@ public class App {
             // - Passes that data to LanguageReport.displayLanguages(...) for formatted output.
             languageReport.displayLanguages(
                     languageDAO.getLanguagesBySpeakerCount(langs),
-                    "Languages by Number of Speakers (English, Chinese, Hindi, Spanish, Arabic)"
+                    "32.Languages by Number of Speakers (English, Chinese, Hindi, Spanish, Arabic)"
             );
 
             // =================================================================
