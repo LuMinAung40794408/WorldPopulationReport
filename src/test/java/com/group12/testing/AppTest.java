@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppTest
-{
+public class AppTest {
     static App app;
 
     @BeforeAll
@@ -18,5 +17,4 @@ public class AppTest
     {
         app = new App();
     }
-
 }
