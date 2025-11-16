@@ -198,7 +198,7 @@ public class App {
             popReport.displayPopulations(popDAO.getPopulationByCountry(), "26.Population of Each Country");
 
             // 5: District population (filtered by country)
-            popReport.displayDistrictPopulations(popDAO.getPopulationByDistrict("Myanmar"), "17.Population of Each District in Myanmar");
+            popReport.displayDistrictPopulations(popDAO.getPopulationByDistrict("Myanmar"), "27.Population of Each District in Myanmar");
 
             // 6: City population
             popReport.displayCityPopulations(popDAO.getPopulationByCity(), "28.Population of Each City");
