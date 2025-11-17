@@ -49,6 +49,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.7.1</version>
                 <configuration>
+                    <finalName>WorldPopulation</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.group12.report.App</mainClass>
@@ -57,6 +58,8 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <attach>false</attach>
                 </configuration>
                 <executions>
                     <execution>
