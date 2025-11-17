@@ -1,7 +1,7 @@
 package com.group12.report;
 
 import com.group12.report.data_access.CountryDAO;
-import com.group12.report.reports.CountryReport;
+import com.group12.report.reports.CountryReport2;
 import com.group12.report.data_access.CityDAO;
 import com.group12.report.reports.CityReport;
 import com.group12.report.data_access.CapitalDAO;
@@ -64,26 +64,26 @@ public class App {
 
             //country report
             CountryDAO dao = new CountryDAO(app.con);
-            CountryReport countryReport = new CountryReport(10); // show only top 10 countries per report
+            CountryReport2 countryReport2 = new CountryReport2(10); // show only top 10 countries per report
 
-            countryReport.printCategory("Country Report");
-            countryReport.displayCountries(dao.getAllCountriesByPopulation(null), "1.All countries in the world organized by largest to smallest population");
-            countryReport.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
-            countryReport.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia)");
+            countryReport2.printCategory("Country Report");
+            countryReport2.displayCountries(dao.getAllCountriesByPopulation(null), "1.All countries in the world organized by largest to smallest population");
+            countryReport2.displayCountries(dao.getCountriesByContinent("Asia", null), "2.All countries in a continent organized by largest to smallest population (Asia) ");
+            countryReport2.displayCountries(dao.getCountriesByRegion("Southeast Asia", null), "3.All countries in a region organized by largest to smallest population (Southeast Asia)");
 
             // ==================== TOP 10 COUNTRY REPORTS (NEW) ====================
 
-            countryReport.displayCountries(
+            countryReport2.displayCountries(
                     dao.getTop10CountriesInWorld(),
                     "4. Top 10 populated countries in the world"
             );
 
-            countryReport.displayCountries(
+            countryReport2.displayCountries(
                     dao.getTop10CountriesInEurope(),
                     "5. Top 10 populated countries in a continent (Europe)"
             );
 
-            countryReport.displayCountries(
+            countryReport2.displayCountries(
                     dao.getTop10CountriesInWesternEurope(),
                     "6. Top 10 populated countries in a region (Western Europe)"
             );

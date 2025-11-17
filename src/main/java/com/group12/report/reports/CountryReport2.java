@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 // This class is responsible for showing country data in a clean, table-style format.
-public class CountryReport {
+public class CountryReport2 {
 
     // The maximum number of countries to display at once
     private final int displayLimit;
@@ -19,7 +19,7 @@ public class CountryReport {
     }
 
     // Optional constructor
-    public CountryReport(int displayLimit) {
+    public CountryReport2(int displayLimit) {
         this.displayLimit = displayLimit;
     }
 
