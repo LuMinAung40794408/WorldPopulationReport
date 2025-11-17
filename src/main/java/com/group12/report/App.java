@@ -17,50 +17,67 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class App {
-    private Connection con;
+    private Connection con = null;
 
-    public void connect(String url, String user, String pass) throws InterruptedException {
-        int maxRetries = 10;
-        int retryDelay = 10000; // 3 seconds
-        int attempt = 0;
+    /**
+     * Connect to the MySQL database.
+     */
+    public void connect(String location, int delay) {
+        try {
+            // Load Database driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Could not load SQL driver");
+            System.exit(-1);
+        }
 
-        while (attempt < maxRetries) {
+        int retries = 15;
+        for (int i = 0; i < retries; ++i) {
+            System.out.println("Connecting to database...");
             try {
-                System.out.printf("Connecting to database (attempt %d/%d)...%n", attempt + 1, maxRetries);
-                con = DriverManager.getConnection(url, user, pass);
-                System.out.println("Connected successfully.");
-                return;
-            } catch (SQLException e) {
-                attempt++;
-                System.err.println("Connection failed: " + e.getMessage());
-                if (attempt >= maxRetries) {
-                    throw new RuntimeException("Failed to connect to database after " + maxRetries + " attempts.", e);
-                }
-                System.out.printf("Retrying in %d seconds...%n", retryDelay / 1000);
-                Thread.sleep(retryDelay);
+                // Wait a bit for db to start
+                Thread.sleep(10000);
+                // Connect to database
+                //con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false&allowPublicKeyRetrieval=true", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?useSSL=false&allowPublicKeyRetrieval=true", "root", "example");
+                System.out.println("Successfully connected");
+                break;
+            }
+            catch (SQLException sqle) {
+                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println(sqle.getMessage());
+            }
+            catch (InterruptedException ie) {
+                System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
 
+    /**
+     * Disconnect from the MySQL database.
+     */
     public void disconnect() {
-        try {
-            if (con != null && !con.isClosed()) {
+        if (con != null) {
+            try {
+                // Close connection
                 con.close();
-                System.out.println("Disconnected.");
+                System.out.println("Connection closed");
+            } catch (Exception e) {
+                System.out.println("Error closing connection to database");
             }
-        } catch (Exception ignored) {}
+        }
     }
 
     public static void main(String[] args) {
         App app = new App();
 
         try {
-            String url = System.getenv().getOrDefault("DB_URL",
-                    "jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=true&useSSL=false");
-            String user = System.getenv().getOrDefault("DB_USER", "root");
-            String pass = System.getenv().getOrDefault("DB_PASS", "example");
-
-            app.connect(url, user, pass);
+            if(args.length < 1){
+                app.connect("localhost:33060", 30000);
+            }else{
+                app.connect("db:3306", 10000);
+            }
 
             //country report
             CountryDAO dao = new CountryDAO(app.con);
