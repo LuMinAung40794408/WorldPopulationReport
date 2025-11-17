@@ -89,4 +89,8 @@ class CountryReportTest {
 
         report.displayCountries(countries, "More than displayLimit");
     }
+    @Test
+    void printCategory_DoesNotCrash() {
+        report.printCategory("Country Report Category");
+    }
 }
