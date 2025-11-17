@@ -1,25 +1,31 @@
 package com.group12.report.data_access;
 
-import com.group12.report.models.Country; // Imports the Country model class
-import java.sql.*; // Import SQL classes for database access
-import java.util.ArrayList; // Imports ArrayList for storing query results
-import java.util.List; // Imports List interface
+import com.group12.report.models.Country;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 40794374 Thu Ta Minn Lu
+ *
+ * Data Access Object (DAO) for country reports.
+ * Handles all SQL queries related to countries.
  */
-
-// This class handles everything related to fetching country data from the database.
 public class CountryDAO {
-    private final Connection con; // This is the database connection (passed in when this class is created)
+    /** Holds a live JDBC connection used for all queries in this DAO. */
+    private final Connection con;
 
-    // Constructor that we give it a database connection
+    /** Dependency-inject the connection so the caller manages lifecycle. */
     public CountryDAO(Connection con) { this.con = con; }
 
-    // Get all countries, sorted by population
+    // ========================= MAIN REPORT METHODS =========================
+
+    /**
+     * All countries in the world ordered by population (largest to smallest).
+     *
+     * @param limit Optional limit (null or <= 0 means no limit).
+     */
     public List<Country> getAllCountriesByPopulation(Integer limit) {
-        // This SQL grabs all the info we need from the 'country' table,
-        // and also joins the 'city' table to get the capital name.
         String sql = """
             SELECT c.Code, c.Name, c.Continent, c.Region, c.Population,
                    c.Capital AS CapitalId, cap.Name AS CapitalName
@@ -27,134 +33,57 @@ public class CountryDAO {
             LEFT JOIN city cap ON cap.ID = c.Capital
             ORDER BY c.Population DESC
         """;
+        // Base query: all countries with their capital name, ordered by population.
 
-        // If a limit is provided, add it to the query
-        if (limit != null && limit > 0) sql += " LIMIT ?";
-
-        // We'll store all the countries we find here
-        List<Country> out = new ArrayList<>();
-
-        // Try to run the SQL safely
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-
-            // If there's a limit, plug it into the query
-            if (limit != null && limit > 0) ps.setInt(1, limit);
-
-            // this run the query
-            try (ResultSet rs = ps.executeQuery()) {
-
-                // Loop through each row
-                while (rs.next()) {
-
-                    // Turn that row into a Country object
-                    out.add(new Country(
-                            rs.getString("Code"),
-                            rs.getString("Name"),
-                            rs.getString("Continent"),
-                            rs.getString("Region"),
-                            rs.getLong("Population"),
-                            (Integer) rs.getObject("CapitalId"), // handles NULL
-                            rs.getString("CapitalName")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            // If something goes wrong, print error message
-            System.err.println("Failed to get countries report: " + e.getMessage());
+        if (limit != null && limit > 0) {
+            sql += " LIMIT ?";
         }
-        return out;
+        // Append LIMIT only when a positive limit is provided.
+
+        return fetchCountries(sql, limit);
+        // Delegate to shared logic that binds optional limit and maps rows -> Country objects.
     }
 
-    // Get countries for a specific continent (e.g., "Asia"), sorted by population
+    /**
+     * All countries in a given continent ordered by population.
+     *
+     * @param continent Continent name (e.g., "Asia").
+     * @param limit Optional limit (null or <= 0 means no limit).
+     */
     public List<Country> getCountriesByContinent(String continent, Integer limit) {
-
-        // This filter by the continent name
         String sql = """
-        SELECT c.Code, c.Name, c.Continent, c.Region, c.Population,
-               c.Capital AS CapitalId, cap.Name AS CapitalName
-        FROM country c
-        LEFT JOIN city cap ON cap.ID = c.Capital
-        WHERE c.Continent = ?
-        ORDER BY c.Population DESC
-    """;
+            SELECT c.Code, c.Name, c.Continent, c.Region, c.Population,
+                   c.Capital AS CapitalId, cap.Name AS CapitalName
+            FROM country c
+            LEFT JOIN city cap ON cap.ID = c.Capital
+            WHERE c.Continent = ?
+            ORDER BY c.Population DESC
+        """;
+        // Filter by continent using a bind parameter to avoid SQL injection.
 
-        // Add a limit if requested
-        if (limit != null && limit > 0) sql += " LIMIT ?";
-
-        List<Country> out = new ArrayList<>();
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-
-            // First placeholder is for the continent
-            ps.setString(1, continent);
-
-            // Second placeholder (if any) is for the limit
-            if (limit != null && limit > 0) ps.setInt(2, limit);
-
-            // This run the query
-            try (ResultSet rs = ps.executeQuery()) {
-
-                // Loop through each result
-                while (rs.next()) {
-                    out.add(new Country(
-                            rs.getString("Code"),
-                            rs.getString("Name"),
-                            rs.getString("Continent"),
-                            rs.getString("Region"),
-                            rs.getLong("Population"),
-                            (Integer) rs.getObject("CapitalId"),
-                            rs.getString("CapitalName")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to get countries by continent: " + e.getMessage());
-        }
-        return out;
+        return fetchCountries(sql, limit, continent);
+        // Bind the continent and (optionally) the limit, then map into Country objects.
     }
 
-    // Get countries for a specific region (e.g., "Southeast Asia"), sorted by population
+    /**
+     * All countries in a given region ordered by population.
+     *
+     * @param region Region name (e.g., "Southeast Asia").
+     * @param limit Optional limit (null or <= 0 means no limit).
+     */
     public List<Country> getCountriesByRegion(String region, Integer limit) {
-
-        // Almost identical to the continent method, but filters by region instead
         String sql = """
-        SELECT c.Code, c.Name, c.Continent, c.Region, c.Population,
-               c.Capital AS CapitalId, cap.Name AS CapitalName
-        FROM country c
-        LEFT JOIN city cap ON cap.ID = c.Capital
-        WHERE c.Region = ?
-        ORDER BY c.Population DESC
-    """;
+            SELECT c.Code, c.Name, c.Continent, c.Region, c.Population,
+                   c.Capital AS CapitalId, cap.Name AS CapitalName
+            FROM country c
+            LEFT JOIN city cap ON cap.ID = c.Capital
+            WHERE c.Region = ?
+            ORDER BY c.Population DESC
+        """;
+        // Filter by region in the WHERE clause.
 
-        // Add a limit if one was provided
-        if (limit != null && limit > 0) sql += " LIMIT ?";
-
-        List<Country> out = new ArrayList<>();
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // First parameter: region
-            ps.setString(1, region);
-
-            // Second parameter: limit, if applicable
-            if (limit != null && limit > 0) ps.setInt(2, limit);
-
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    out.add(new Country(
-                            rs.getString("Code"),
-                            rs.getString("Name"),
-                            rs.getString("Continent"),
-                            rs.getString("Region"),
-                            rs.getLong("Population"),
-                            (Integer) rs.getObject("CapitalId"),
-                            rs.getString("CapitalName")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to get countries by region: " + e.getMessage());
-        }
-        return out;
+        return fetchCountries(sql, limit, region);
+        // Bind the region and (optional) limit, then map results.
     }
 
     // ======================== TOP 10 COUNTRY REPORTS ========================
@@ -279,5 +208,4 @@ public class CountryDAO {
 
         return out;
     }
-
 }
