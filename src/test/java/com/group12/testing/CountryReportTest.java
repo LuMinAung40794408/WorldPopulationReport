@@ -1,7 +1,7 @@
 package com.group12.testing;
 
 import com.group12.report.models.Country;
-import com.group12.report.reports.CountryReport2;
+import com.group12.report.reports.CountryReport;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +16,14 @@ import java.util.List;
  *  - single element
  *  - more than displayLimit
  */
-class CountryReport2Test {
+class CountryReportTest {
 
-    static CountryReport2 report;
+    static CountryReport report;
 
     @BeforeAll
     static void init() {
         // Same display limit as App.java (you use 10 there)
-        report = new CountryReport2(10);
+        report = new CountryReport(10);
     }
 
     /**
