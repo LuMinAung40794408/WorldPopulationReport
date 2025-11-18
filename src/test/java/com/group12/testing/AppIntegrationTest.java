@@ -2,6 +2,7 @@ package com.group12.testing;
 
 import com.group12.report.App;
 import com.group12.report.data_access.*;
+import com.group12.report.App;
 
 import com.group12.report.models.*;
 
@@ -13,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static com.group12.testing.AppTest.app;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -25,7 +25,7 @@ public class AppIntegrationTest {
     static CountryDAO countryDAO;
     static LanguageDAO languageDAO;
     static PopulationDAO populationDAO;
-
+    static App app;
     @BeforeAll
     static void init() throws Exception {
         Class.forName("com.mysql.cj.jdbc.Driver");
