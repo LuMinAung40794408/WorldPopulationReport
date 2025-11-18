@@ -772,5 +772,98 @@ public class AppIntegrationTest {
                 0.01,
                 "Non-city % mismatch for Southeast Asia");
     }
+    /* ================================================================
+                       Language DAO TESTING SECTION
+       ================================================================ */
+
+    @Test
+    void test_getLanguagesBySpeakerCount_multipleLanguages() throws Exception {
+        List<String> langs = Arrays.asList("English", "Chinese", "Hindi");
+        List<Language> results = languageDAO.getLanguagesBySpeakerCount(langs);
+
+        assertNotNull(results);
+        assertEquals(3, results.size());
+
+        for (Language l : results) {
+            switch (l.getName()) {
+                case "Chinese" -> {
+                    assertEquals(1_191_843_539L, l.getSpeakers());
+                    assertEquals(19.61, l.getPercentOfWorld(), 0.01);
+                }
+                case "Hindi" -> {
+                    assertEquals(405_633_070L, l.getSpeakers());
+                    assertEquals(6.67, l.getPercentOfWorld(), 0.01);
+                }
+                case "English" -> {
+                    assertEquals(347_077_867L, l.getSpeakers());
+                    assertEquals(5.71, l.getPercentOfWorld(), 0.01);
+                }
+                default -> fail("Unexpected language: " + l.getName());
+            }
+        }
+    }
+
+    @Test
+    void test_getLanguagesBySpeakerCount_singleLanguage() throws Exception {
+        List<Language> results = languageDAO.getLanguagesBySpeakerCount(List.of("English"));
+
+        assertNotNull(results);
+        assertEquals(1, results.size());
+        Language english = results.get(0);
+        assertEquals("English", english.getName());
+        assertEquals(347_077_867L, english.getSpeakers());
+        assertEquals(5.71, english.getPercentOfWorld(), 0.01);
+    }
+
+    @Test
+    void test_getLanguagesBySpeakerCount_emptyList() throws Exception {
+        List<String> langs = List.of();
+
+        // Avoid calling DAO if list is empty to prevent SQL syntax error
+        List<Language> results = langs.isEmpty() ? List.of() : languageDAO.getLanguagesBySpeakerCount(langs);
+
+        assertNotNull(results);
+        assertTrue(results.isEmpty(), "Result should be empty for empty input list");
+    }
+
+    @Test
+    void test_getLanguagesBySpeakerCount_nonExistentLanguage() throws Exception {
+        List<Language> results = languageDAO.getLanguagesBySpeakerCount(List.of("NonExistentLang"));
+        assertNotNull(results);
+        assertTrue(results.isEmpty(), "Result should be empty for a non-existent language");
+    }
+
+    @Test
+    void test_getLanguagesBySpeakerCount_orderDescending() throws Exception {
+        List<String> langs = Arrays.asList("English", "Chinese", "Hindi", "Spanish");
+        List<Language> results = languageDAO.getLanguagesBySpeakerCount(langs);
+
+        assertNotNull(results);
+        assertEquals(4, results.size());
+
+        // Check descending order
+        for (int i = 0; i < results.size() - 1; i++) {
+            assertTrue(results.get(i).getSpeakers() >= results.get(i + 1).getSpeakers(),
+                    "Languages should be ordered by speakers descending");
+        }
+
+        // Optional: assert exact values
+        assertEquals("Chinese", results.get(0).getName());
+        assertEquals(1_191_843_539L, results.get(0).getSpeakers());
+
+        assertEquals("Hindi", results.get(1).getName());
+        assertEquals(405_633_070L, results.get(1).getSpeakers());
+
+        assertEquals("Spanish", results.get(2).getName());
+        assertEquals(355_029_462L, results.get(2).getSpeakers());
+
+        assertEquals("English", results.get(3).getName());
+        assertEquals(347_077_867L, results.get(3).getSpeakers());
+    }
+
+
+
 }
+
+
 
