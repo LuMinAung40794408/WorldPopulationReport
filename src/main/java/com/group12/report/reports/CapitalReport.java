@@ -2,6 +2,7 @@ package com.group12.report.reports;
 
 import com.group12.report.models.Capital;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author 40794512 Zayar Than Htike
@@ -13,6 +14,8 @@ import java.util.List;
  *
  */
 public class CapitalReport {
+
+    private static final Logger LOGGER = Logger.getLogger(CapitalReport.class.getName());
 
     // The maximum number of capital records to display in the report
     private final int displayLimit;
@@ -32,7 +35,7 @@ public class CapitalReport {
      * @param categoryName The name of the report category (e.g., "World", "Continent", "Region")
      */
     public void printCategory(String categoryName) {
-        System.out.println("\n================ Capital Report ================\n");
+        LOGGER.info(() -> "\n================ Capital Report ================\n");
     }
 
     /**
@@ -48,33 +51,43 @@ public class CapitalReport {
 
         // Check if the list is null or empty
         if (capitals == null || capitals.isEmpty()) {
-            System.out.println("No capital cities to display for: " + title);
+            LOGGER.info(() -> "No capital cities to display for: " + title);
             return;
         }
 
         // Print the report title
-        System.out.println("\n" + title + "\n");
+        LOGGER.info(() -> "\n" + title + "\n");
 
         // Print the table header
-        System.out.println("+----------------------+----------------------+-----------------+");
-        System.out.printf("| %-20s | %-20s | %15s |%n", "Capital", "Country", "Population");
-        System.out.println("+----------------------+----------------------+-----------------+");
+        LOGGER.info("+----------------------+----------------------+-----------------+");
+        LOGGER.info(() -> String.format(
+                "| %-20s | %-20s | %15s |",
+                "Capital", "Country", "Population"
+        ));
+        LOGGER.info("+----------------------+----------------------+-----------------+");
 
         // Loop through and display up to 'displayLimit' number of records
         for (int i = 0; i < Math.min(displayLimit, capitals.size()); i++) {
             Capital c = capitals.get(i);
-            System.out.printf("| %-20s | %-20s | %,15d |%n",
+            LOGGER.info(() -> String.format(
+                    "| %-20s | %-20s | %,15d |",
                     c.getName(),
                     c.getCountry(),
-                    c.getPopulation());
+                    c.getPopulation()
+            ));
         }
 
+
         // Print table footer line
-        System.out.println("+----------------------+----------------------+-----------------+");
+        LOGGER.info("+----------------------+----------------------+-----------------+");
 
         // Indicate if not all records are displayed
         if (capitals.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d capital cities.%n", displayLimit, capitals.size());
+            final int total = capitals.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d capital cities.",
+                    displayLimit, total
+            ));
         }
     }
 }

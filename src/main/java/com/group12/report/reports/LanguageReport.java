@@ -2,6 +2,7 @@ package com.group12.report.reports;
 
 import com.group12.report.models.Language;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * * @author 40794418yuyakoko
@@ -13,6 +14,8 @@ import java.util.List;
  * the number of rows displayed (default = 15).
  */
 public class LanguageReport {
+
+    private static final Logger LOGGER = Logger.getLogger(LanguageReport.class.getName());
 
     /** The maximum number of language records to display in a report. */
     private final int displayLimit;
@@ -41,8 +44,9 @@ public class LanguageReport {
      *                     but can be used to show different report categories later).
      */
     public void printCategory(String categoryName) {
-        System.out.println("\n================ " + "Language Report" + " ================\n");
+        LOGGER.info(() -> "\n================ Language Report ================\n");
     }
+
 
     /**
      * Displays the list of languages in a neatly formatted table.
@@ -63,36 +67,43 @@ public class LanguageReport {
      * @param title     The title of the report section (e.g., "Top Languages in the World").
      */
     public void displayLanguages(List<Language> languages, String title) {
-        // Handle the case where there is no data to display.
         if (languages == null || languages.isEmpty()) {
-            System.out.println("No language data to display for: " + title);
+            LOGGER.info(() -> "No language data to display for: " + title);
             return;
         }
 
         // Print report title.
-        System.out.println("\n" + title + "\n");
+        LOGGER.info(() -> "\n" + title + "\n");
 
         // Print table header with column borders.
-        System.out.println("+----------------------+-----------------+----------------------+");
-        System.out.printf("| %-20s | %15s | %20s |%n", "Language", "Speakers", "Percent of World");
-        System.out.println("+----------------------+-----------------+----------------------+");
+        LOGGER.info("+----------------------+-----------------+----------------------+");
+        LOGGER.info(() -> String.format(
+                "| %-20s | %15s | %20s |",
+                "Language", "Speakers", "Percent of World"
+        ));
+        LOGGER.info("+----------------------+-----------------+----------------------+");
 
         // Loop through each language and display formatted data.
         // Only show up to the display limit.
         for (int i = 0; i < Math.min(displayLimit, languages.size()); i++) {
             Language l = languages.get(i);
-            System.out.printf("| %-20s | %,15d | %19.2f%% |%n",
+            LOGGER.info(() -> String.format(
+                    "| %-20s | %,15d | %19.2f%% |",
                     l.getName(),              // Language name
                     l.getSpeakers(),          // Total speakers (formatted with commas)
-                    l.getPercentOfWorld());   // Percentage of world population
+                    l.getPercentOfWorld()));   // Percentage of world population
         }
 
         // Print table footer line.
-        System.out.println("+----------------------+-----------------+----------------------+");
+        LOGGER.info("+----------------------+-----------------+----------------------+");
 
         // If the data list exceeds the display limit, show an informational message.
         if (languages.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d languages.%n", displayLimit, languages.size());
+            final int total = languages.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d languages.",
+                    displayLimit, total
+            ));
         }
     }
 }
