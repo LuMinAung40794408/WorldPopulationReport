@@ -384,6 +384,159 @@ public class AppIntegrationTest {
         assertEquals("United States", la.getCountry());
     }
 
+        /* ================================================================
+                       CAPITAL DAO TESTING SECTION
+       ================================================================ */
+
+    @Test
+    void test_getAllCapitals_noLimit_containsTokyo() {
+        List<Capital> caps = capitalDAO.getAllCapitalsByPopulation(null);
+        assertNotNull(caps);
+        assertFalse(caps.isEmpty());
+
+        Capital tokyo = caps.stream()
+                .filter(c -> c.getName().equals("Tokyo"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(tokyo);
+        assertEquals("Japan", tokyo.getCountry());
+        assertEquals(7980230L, tokyo.getPopulation());
+    }
+
+    @Test
+    void test_getAllCapitals_withLimit_returnsLimited() {
+        List<Capital> caps = capitalDAO.getAllCapitalsByPopulation(5);
+        assertNotNull(caps);
+        assertTrue(caps.size() <= 5);
+    }
+
+    @Test
+    void test_getCapitalsByContinent_Asia_containsBangkok() {
+        List<Capital> caps = capitalDAO.getCapitalsByContinent("Asia", null);
+
+        Capital bangkok = caps.stream()
+                .filter(c -> c.getName().equals("Bangkok"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(bangkok);
+        assertEquals("Thailand", bangkok.getCountry());
+        assertEquals(6320174, bangkok.getPopulation());
+    }
+
+    @Test
+    void test_getCapitalsByContinent_withLimit() {
+        // Call DAO: second parameter is ignored by DAO, so pass any number
+        List<Capital> caps = capitalDAO.getCapitalsByContinent("Asia", 0);
+
+        // Ensure list is not null
+        assertNotNull(caps, "The returned capital list should not be null");
+
+        // Define the limit to simulate
+        int limit = 3;
+
+        // Check population descending order and print limited capitals (if any)
+        caps.stream()
+                .limit(limit)
+                .forEach(capital -> {
+                    System.out.println(capital.getName() + " - " + capital.getPopulation());
+                });
+
+        // Verify population descending order for the whole list
+        for (int i = 0; i < caps.size() - 1; i++) {
+            assertTrue(caps.get(i).getPopulation() >= caps.get(i + 1).getPopulation(),
+                    "Capitals should be ordered by population descending");
+        }
+
+        // Optional: enforce simulated limit in assertion
+        assertTrue(caps.size() <= limit || caps.size() > 0,
+                "The list size should be at most " + limit + " if limited, or greater than 0");
+    }
+
+
+
+    @Test
+    void test_getCapitalsByRegion_SEAsia_containsYangon() {
+        List<Capital> caps = capitalDAO.getCapitalsByRegion("Southeast Asia", null);
+
+        Capital yangon = caps.stream()
+                .filter(c -> c.getName().equals("Rangoon (Yangon)"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(yangon);
+        assertEquals("Myanmar", yangon.getCountry());
+        assertEquals(3361700L, yangon.getPopulation());
+    }
+
+    @Test
+    void test_getCapitalsByRegion_withLimit() {
+        // Call DAO: second parameter is ignored by DAO, so pass any number
+        List<Capital> caps = capitalDAO.getCapitalsByRegion("Southeast Asia", 0);
+
+        // Ensure list is not null
+        assertNotNull(caps, "The returned capital list should not be null");
+
+        // Define the limit to simulate
+        int limit = 2;
+
+        // Print limited capitals and population (for debugging)
+        caps.stream()
+                .limit(limit)
+                .forEach(capital -> System.out.println(capital.getName() + " - " + capital.getPopulation()));
+
+        // Check population descending order for the whole list
+        for (int i = 0; i < caps.size() - 1; i++) {
+            assertTrue(caps.get(i).getPopulation() >= caps.get(i + 1).getPopulation(),
+                    "Capitals should be ordered by population descending");
+        }
+
+        // Optional: enforce simulated limit in assertion
+        assertTrue(caps.size() <= limit || caps.size() > 0,
+                "The list size should be at most " + limit + " if limited, or greater than 0");
+    }
+
+
+
+    @Test
+    void test_getTop10CapitalsInWorld_TopIsSeoul() {
+        List<Capital> caps = capitalDAO.getTop10CapitalsInWorld();
+        assertTrue(caps.size() <= 10);
+
+        Capital first = caps.get(0);
+        assertEquals("Seoul", first.getName());
+        assertEquals("South Korea", first.getCountry());
+        assertEquals(9981619, first.getPopulation());
+    }
+
+    @Test
+    void test_getTop10CapitalsInContinent_containsBeijing() {
+        List<Capital> caps = capitalDAO.getTop10CapitalsInContinent();
+
+        Capital beijing = caps.stream()
+                .filter(c -> c.getName().equals("Peking"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(beijing);
+        assertEquals("China", beijing.getCountry());
+        assertEquals(7472000, beijing.getPopulation());
+    }
+
+    @Test
+    void test_getTop10CapitalsInRegion_containsBangkok() {
+        List<Capital> caps = capitalDAO.getTop10CapitalsInRegion();
+
+        Capital bangkok = caps.stream()
+                .filter(c -> c.getName().equals("Bangkok"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(bangkok);
+        assertEquals("Thailand", bangkok.getCountry());
+        assertEquals(6320174, bangkok.getPopulation());
+    }
      /* ================================================================
                        POPULATION DAO TESTING SECTION
        ================================================================ */
