@@ -239,6 +239,150 @@ public class AppIntegrationTest {
         Country first = countries.get(0);
         assertEquals("Germany", first.getName());
     }
+     /* ================================================================
+                       CITY DAO TESTING SECTION
+       ================================================================ */
+
+    @Test
+    void test_getAllCities_noLimit_containsShanghai() {
+        List<City> cities = cityDAO.getAllCitiesByPopulation(null);
+
+        City shanghai = cities.stream()
+                .filter(c -> c.getName().equals("Shanghai"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(shanghai);
+        assertEquals("China", shanghai.getCountry());
+        assertEquals("Shanghai", shanghai.getDistrict());
+        assertEquals(9696300L, shanghai.getPopulation());
+    }
+
+    @Test
+    void test_getAllCities_withLimit() {
+        List<City> cities = cityDAO.getAllCitiesByPopulation(5);
+        assertTrue(cities.size() <= 5);
+    }
+
+    @Test
+    void test_getCitiesByContinent_Asia_containsSeoul() {
+        List<City> cities = cityDAO.getCitiesByContinent("Asia", null);
+
+        City seoul = cities.stream()
+                .filter(c -> c.getName().equals("Seoul"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(seoul);
+        assertEquals("South Korea", seoul.getCountry());
+        assertEquals("Seoul", seoul.getDistrict());
+        assertEquals(9981619L, seoul.getPopulation());
+    }
+
+    @Test
+    void test_getCitiesByRegion_NorthAmerica_containsNewYork() {
+        List<City> cities = cityDAO.getCitiesByRegion("North America", null);
+
+        City ny = cities.stream()
+                .filter(c -> c.getName().equals("New York"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(ny);
+        assertEquals("United States", ny.getCountry());
+        assertEquals("New York", ny.getDistrict());
+        assertEquals(8008278L, ny.getPopulation());
+    }
+
+    @Test
+    void test_getCitiesByCountry_USA_containsLA() {
+        List<City> cities = cityDAO.getCitiesByCountry("United States", null);
+
+        City la = cities.stream()
+                .filter(c -> c.getName().equals("Los Angeles"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(la);
+        assertEquals("United States", la.getCountry());
+        assertEquals("California", la.getDistrict());
+        assertEquals(3694820L, la.getPopulation());
+    }
+
+    @Test
+    void test_getCitiesByDistrict_California_containsSanDiego() {
+        List<City> cities = cityDAO.getCitiesByDistrict("California", null);
+
+        City sd = cities.stream()
+                .filter(c -> c.getName().equals("San Diego"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(sd);
+        assertEquals("United States", sd.getCountry());
+        assertEquals("California", sd.getDistrict());
+        assertEquals(1223400L, sd.getPopulation());
+    }
+
+    @Test
+    void test_getTop10CitiesInWorld_firstIsMumbai() {
+        List<City> cities = cityDAO.getTop10CitiesInWorld();
+        City first = cities.get(0);
+
+        assertEquals("Mumbai (Bombay)", first.getName());
+    }
+
+    @Test
+    void test_getTop10CitiesInContinent_containsKarachi() {
+        List<City> cities = cityDAO.getTop10CitiesInContinent();
+
+        City karachi = cities.stream()
+                .filter(c -> c.getName().equals("Karachi"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(karachi);
+        assertEquals("Pakistan", karachi.getCountry());
+    }
+
+    @Test
+    void test_getTop10CitiesInRegion_containsBangkok_city() {
+        List<City> cities = cityDAO.getTop10CitiesInRegion();
+
+        City bangkok = cities.stream()
+                .filter(c -> c.getName().equals("Bangkok"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(bangkok);
+        assertEquals("Thailand", bangkok.getCountry());
+    }
+
+    @Test
+    void test_getTop10CitiesInCountry_Myanmar_containsMandalay() {
+        List<City> cities = cityDAO.getTop10CitiesInCountry();
+
+        City mandalay = cities.stream()
+                .filter(c -> c.getName().equals("Mandalay"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(mandalay);
+        assertEquals("Myanmar", mandalay.getCountry());
+    }
+
+    @Test
+    void test_getTop10CitiesInDistrict_California_containsLA() {
+        List<City> cities = cityDAO.getTop10CitiesInDistrict();
+
+        City la = cities.stream()
+                .filter(c -> c.getName().equals("Los Angeles"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(la);
+        assertEquals("United States", la.getCountry());
+    }
 
      /* ================================================================
                        POPULATION DAO TESTING SECTION
