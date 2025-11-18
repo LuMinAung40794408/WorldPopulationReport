@@ -95,6 +95,65 @@ public class CapitalDAO {
      * @param param Optional parameters (e.g., continent or region names) to bind to the query.
      * @return A list of populated {@link Capital} objects.
      */
+
+    // ===================== TOP 10 CAPITAL CITY REPORTS (NEW) =====================
+
+    /**
+     * Top 10 populated capital cities in the world.
+     */
+    public List<Capital> getTop10CapitalsInWorld() {
+        String sql = """
+        SELECT ci.Name AS Name, co.Name AS Country, ci.Population
+        FROM country co
+        JOIN city ci ON ci.ID = co.Capital
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCapitalQuery(sql);
+    }
+
+    /**
+     * Top 10 populated capital cities in a continent (Asia).
+     */
+    public List<Capital> getTop10CapitalsInContinent() {
+        String sql = """
+        SELECT ci.Name AS Name, co.Name AS Country, ci.Population
+        FROM country co
+        JOIN city ci ON ci.ID = co.Capital
+        WHERE co.Continent = 'Asia'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCapitalQuery(sql);
+    }
+
+    /**
+     * Top 10 populated capital cities in a region (Southeast Asia).
+     */
+    public List<Capital> getTop10CapitalsInRegion() {
+        String sql = """
+        SELECT ci.Name AS Name, co.Name AS Country, ci.Population
+        FROM country co
+        JOIN city ci ON ci.ID = co.Capital
+        WHERE co.Region = 'Southeast Asia'
+        ORDER BY ci.Population DESC
+        LIMIT 10;
+    """;
+
+        return executeFixedCapitalQuery(sql);
+    }
+
+
+    /**
+     * Executes the given SQL query and maps the result set into a list of {@link Capital} objects.
+     *
+     * @param sql   The SQL query string to execute.
+     * @param limit Optional limit value to bind in the prepared statement.
+     * @param param Optional parameters (e.g., continent or region names) to bind to the query.
+     * @return A list of populated {@link Capital} objects.
+     */
     private List<Capital> fetchCapitals(String sql, Integer limit, String... param) {
         List<Capital> out = new ArrayList<>();
 
@@ -125,6 +184,27 @@ public class CapitalDAO {
         } catch (SQLException e) {
             // Log error to console for debugging
             System.err.println("Failed to get capital report: " + e.getMessage());
+        }
+
+        return out;
+    }
+
+    private List<Capital> executeFixedCapitalQuery(String sql) {
+        List<Capital> out = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                out.add(new Capital(
+                        rs.getString("Name"),
+                        rs.getString("Country"),
+                        rs.getLong("Population")
+                ));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Failed to execute Top10 capital query: " + e.getMessage());
         }
 
         return out;

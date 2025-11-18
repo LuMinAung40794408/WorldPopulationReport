@@ -48,10 +48,6 @@ public class Country {
         return population;
     }
 
-    public Integer getCapitalId() {
-        return capitalId;
-    }
-
     public String getCapitalName() {
         return capitalName;
     }
