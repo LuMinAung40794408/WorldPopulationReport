@@ -4,6 +4,8 @@ import com.group12.report.models.Language;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 40794418yuyakoko
@@ -14,6 +16,8 @@ import java.util.List;
  * to generate reports on languages and their total speakers across the world.
  */
 public class LanguageDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(LanguageDAO.class.getName());
 
     // Database connection instance shared with this DAO.
     private final Connection con;
@@ -39,15 +43,8 @@ public class LanguageDAO {
      * @return A list of Language model objects containing the query results.
      */
     public List<Language> getLanguagesBySpeakerCount(List<String> languages) {
-        // Dynamically create placeholders (e.g., "?, ?, ?") for the SQL IN clause.
         String placeholders = String.join(",", languages.stream().map(l -> "?").toList());
 
-        // SQL query:
-        // - Joins `countrylanguage` (cl) with `country` (c) to access population data.
-        // - Calculates total number of speakers for each language:
-        //   SUM(c.Population * cl.Percentage / 100)
-        // - Calculates what percent of the world population speaks that language.
-        // - Orders results by descending number of speakers.
         String sql = """
             SELECT cl.Language,
                 ROUND(SUM(c.Population * cl.Percentage / 100)) AS Speakers,
@@ -61,33 +58,28 @@ public class LanguageDAO {
             ORDER BY Speakers DESC
         """.formatted(placeholders);
 
-        // List to hold the final output objects.
         List<Language> out = new ArrayList<>();
 
-        // Execute the query safely using PreparedStatement.
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // Bind each language name to its placeholder in the SQL query.
+
             for (int i = 0; i < languages.size(); i++) {
                 ps.setString(i + 1, languages.get(i));
             }
 
-            // Execute query and process the result set.
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    // Create a new Language object for each record and add it to the list.
                     out.add(new Language(
-                            rs.getString("Language"),     // Language name
-                            rs.getLong("Speakers"),       // Total speakers (rounded)
-                            rs.getDouble("PercentOfWorld")// % of world population
+                            rs.getString("Language"),
+                            rs.getLong("Speakers"),
+                            rs.getDouble("PercentOfWorld")
                     ));
                 }
             }
         } catch (SQLException e) {
-            // If a database error occurs, print a descriptive message.
-            System.err.println("Failed to get language report: " + e.getMessage());
+
+            LOGGER.log(Level.SEVERE, "Failed to get language report", e);
         }
 
-        // Return the final list of Language objects (may be empty if query fails).
         return out;
     }
 }
