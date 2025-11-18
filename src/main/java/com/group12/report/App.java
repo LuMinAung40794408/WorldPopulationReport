@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class App {
-    private Connection con = null;
+    public Connection con = null;
 
     /**
      * Connect to the MySQL database.
