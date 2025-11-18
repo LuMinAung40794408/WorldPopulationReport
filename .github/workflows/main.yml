@@ -4,6 +4,9 @@ on:
     branches:
       - master
       - develop
+permissions:
+  contents: write
+
 jobs:
   UnitTests:
     name: Unit Tests
@@ -25,6 +28,13 @@ jobs:
             mvn -Dtest=com.group12.testing.CapitalReportTest test
             mvn -Dtest=com.group12.testing.PopulationReportTest test
             mvn -Dtest=com.group12.testing.LanguageReportTest test
+      - name: CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco
+          flags: Unit Tests # optional
+          verbose: true # optional (default = false)
 
   IntegrationTests:
     name: Integration Tests
