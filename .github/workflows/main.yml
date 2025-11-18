@@ -4,8 +4,10 @@ on:
     branches:
       - master
       - develop
+
 permissions:
   contents: write
+  pages: write
 
 jobs:
   UnitTests:
@@ -29,12 +31,12 @@ jobs:
             mvn -Dtest=com.group12.testing.PopulationReportTest test
             mvn -Dtest=com.group12.testing.LanguageReportTest test
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          directory: ./target/site/jacoco
-          flags: Unit Tests # optional
-          verbose: true # optional (default = false)
+            #token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+            directory: ./target/site/jacoco
+            flags: Unit Tests # optional
+            verbose: true # optional (default = false)
 
   IntegrationTests:
     name: Integration Tests
@@ -54,9 +56,9 @@ jobs:
           docker compose up -d db
           mvn -Dtest=com.group12.testing.AppIntegrationTest test
       - name: CodeCov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          #token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
