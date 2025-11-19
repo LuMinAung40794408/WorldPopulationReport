@@ -36,8 +36,9 @@ body:
       label: Version
       description: What version of our software are you running?
       options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
+        - v0.2 (Default)
+        - v0.1
+        - latest
       default: 0
     validations:
       required: true
@@ -52,6 +53,8 @@ body:
         - Chrome
         - Safari
         - Microsoft Edge
+        - Opera
+        - Brave
 
   - type: textarea
     id: logs
