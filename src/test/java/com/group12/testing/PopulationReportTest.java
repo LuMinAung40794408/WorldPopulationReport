@@ -9,7 +9,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
+import java.util.logging.*;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -139,27 +145,34 @@ class PopulationReportTest {
 
         reportLimit5.displayCityPopulations(cities, "Many cities");
     }
+
+
     @Test
     void printCategory_PrintsCorrectHeader() {
         PopulationReport report = new PopulationReport(10);
 
-        // Capture System.out
+        // Capture log output instead of System.out
+        Logger logger = Logger.getLogger(PopulationReport.class.getName());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream oldOut = System.out;
-        System.setOut(new PrintStream(out));
+        Handler handler = new StreamHandler(out, new SimpleFormatter());
+
+        boolean oldUseParent = logger.getUseParentHandlers();
+        logger.setUseParentHandlers(false);
+        logger.addHandler(handler);
 
         try {
-            // Act
             report.printCategory("Anything");
 
-            // Assert
+            // make sure everything is flushed to the stream
+            handler.flush();
             String printed = out.toString();
+
             assertTrue(printed.contains("================ Population Report ================"));
 
         } finally {
-            // Restore System.out
-            System.setOut(oldOut);
+            logger.removeHandler(handler);
+            logger.setUseParentHandlers(oldUseParent);
         }
     }
-
 }
+

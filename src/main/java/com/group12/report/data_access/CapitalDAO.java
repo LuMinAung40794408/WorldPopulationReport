@@ -4,6 +4,8 @@ import com.group12.report.models.Capital;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 40794512 Zayar Than Htike
@@ -17,6 +19,7 @@ import java.util.List;
  */
 public class CapitalDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(CapitalDAO.class.getName());
     /** Database connection used to execute SQL queries */
     private final Connection con;
 
@@ -159,31 +162,27 @@ public class CapitalDAO {
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
 
-            // Bind all string parameters (continent/region) dynamically
             for (int i = 0; i < param.length; i++) {
                 ps.setString(i + 1, param[i]);
             }
 
-            // Bind limit parameter if applicable
             if (limit != null && limit > 0) {
                 ps.setInt(param.length + 1, limit);
             }
 
-            // Execute query and iterate through result set
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    // Map each row into a Capital model object
                     out.add(new Capital(
-                            rs.getString("Name"),      // Capital city name
-                            rs.getString("Country"),   // Associated country
-                            rs.getLong("Population")   // Population count
+                            rs.getString("Name"),
+                            rs.getString("Country"),
+                            rs.getLong("Population")
                     ));
                 }
             }
 
         } catch (SQLException e) {
-            // Log error to console for debugging
-            System.err.println("Failed to get capital report: " + e.getMessage());
+            // Replaced System.err with logger
+            LOGGER.log(Level.SEVERE, "Failed to get capital report", e);
         }
 
         return out;
@@ -204,7 +203,8 @@ public class CapitalDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Failed to execute Top10 capital query: " + e.getMessage());
+            // Replaced System.err with logger
+            LOGGER.log(Level.SEVERE, "Failed to execute Top10 capital query", e);
         }
 
         return out;

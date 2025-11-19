@@ -4,6 +4,8 @@ import com.group12.report.models.Population;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 40779661 Ann Min Nyo
@@ -12,6 +14,9 @@ import java.util.List;
  * for various levels such as world, continent, region, country, district, and city.
  */
 public class PopulationDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(PopulationDAO.class.getName());
+
     private final Connection con;
     public PopulationDAO(Connection con) { this.con = con; }
 
@@ -147,7 +152,8 @@ public class PopulationDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get district population: " + e.getMessage());
+            // was System.err.println(...)
+            LOGGER.log(Level.SEVERE, "Failed to get district population", e);
         }
         return out;
     }
@@ -178,7 +184,8 @@ public class PopulationDAO {
                 ));
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get city population: " + e.getMessage());
+            // was System.err.println(...)
+            LOGGER.log(Level.SEVERE, "Failed to get city population", e);
         }
         return out;
     }
@@ -204,7 +211,8 @@ public class PopulationDAO {
                 ));
             }
         } catch (SQLException e) {
-            System.err.println("Failed to get breakdown population: " + e.getMessage());
+            // was System.err.println(...)
+            LOGGER.log(Level.SEVERE, "Failed to get breakdown population", e);
         }
         return out;
     }
