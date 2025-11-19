@@ -15,6 +15,7 @@ It demonstrates professional software engineering practices using **Scrum method
 * **Develop Build Status** ![Develop Build Status](https://img.shields.io/github/actions/workflow/status/LuMinAung40794408/WorldPopulationReport/main.yml?branch=develop)
 * **License** ![GitHub license](https://img.shields.io/github/license/LuMinAung40794408/WorldPopulationReport)
 * **Release** [![Releases](https://img.shields.io/github/release/LuMinAung40794408/WorldPopulationReport/all.svg?style=flat-square)](https://github.com/LuMinAung40794408/WorldPopulationReport/releases)
+* [![codecov](https://codecov.io/gh/LuMinAung40794408/WorldPopulationReport/graph/badge.svg?token=PUA2YDA3R2)](https://codecov.io/gh/LuMinAung40794408/WorldPopulationReport)
 
 
 ##  Team Members
