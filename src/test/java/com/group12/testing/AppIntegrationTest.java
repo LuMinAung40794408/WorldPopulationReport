@@ -13,11 +13,14 @@ import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AppIntegrationTest {
+
+    private static final Logger LOGGER = Logger.getLogger(AppIntegrationTest.class.getName());
 
     static Connection conn;
     static CapitalDAO capitalDAO;
@@ -110,7 +113,8 @@ public class AppIntegrationTest {
                 .forEach(country -> {
                     assertEquals("Asia", country.getContinent(),
                             "Country " + country.getName() + " should belong to Asia");
-                    System.out.println(country.getName() + " - " + country.getPopulation());
+                    LOGGER.info(() ->
+                            country.getName() + " - " + country.getPopulation());
                 });
 
         // Check population descending order for the whole list
@@ -159,7 +163,8 @@ public class AppIntegrationTest {
                 .forEach(country -> {
                     assertEquals("Western Europe", country.getRegion(),
                             "Country " + country.getName() + " should belong to Western Europe");
-                    System.out.println(country.getName() + " - " + country.getPopulation());
+                    LOGGER.info(() ->
+                            country.getName() + " - " + country.getPopulation());
                 });
 
         // Check population descending order for the whole list (if there are multiple countries)
@@ -440,7 +445,8 @@ public class AppIntegrationTest {
         caps.stream()
                 .limit(limit)
                 .forEach(capital -> {
-                    System.out.println(capital.getName() + " - " + capital.getPopulation());
+                    LOGGER.info(() ->
+                            capital.getName() + " - " + capital.getPopulation());
                 });
 
         // Verify population descending order for the whole list
@@ -484,7 +490,11 @@ public class AppIntegrationTest {
         // Print limited capitals and population (for debugging)
         caps.stream()
                 .limit(limit)
-                .forEach(capital -> System.out.println(capital.getName() + " - " + capital.getPopulation()));
+                .forEach(capital ->
+                        LOGGER.info(() ->
+                                capital.getName() + " - " + capital.getPopulation())
+                );
+
 
         // Check population descending order for the whole list
         for (int i = 0; i < caps.size() - 1; i++) {

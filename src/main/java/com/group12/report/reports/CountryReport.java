@@ -2,6 +2,7 @@ package com.group12.report.reports;
 
 import com.group12.report.models.Country;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author 40794374 Thu Ta Minn Lu
@@ -10,6 +11,8 @@ import java.util.List;
  * Layout and behaviour matches CityReport for consistency.
  */
 public class CountryReport {
+
+    private static final Logger LOGGER = Logger.getLogger(CountryReport.class.getName());
 
     // Max rows to print in the table (caps console output).
     private final int displayLimit;
@@ -23,7 +26,7 @@ public class CountryReport {
      * Prints the category header for country reports.
      */
     public void printCategory(String categoryName) {
-        System.out.println("\n================   Country Report   ================\n");
+        LOGGER.info(() -> "\n================   Country Report   ================\n");
     }
 
     /**
@@ -33,39 +36,47 @@ public class CountryReport {
      * @param title     Section title (e.g., “All countries in the world…”).
      */
     public void displayCountries(List<Country> countries, String title) {
-        // Defensive check: avoids NPE and informs user when there’s no data.
+
         if (countries == null || countries.isEmpty()) {
-            System.out.println("No countries to display for: " + title);
+            LOGGER.info(() -> "No countries to display for: " + title);
             return;
         }
 
         // Prints a descriptive title for the current table (e.g., filter context).
-        System.out.println("\n" + title + "\n");
+        LOGGER.info(() -> "\n" + title + "\n");
 
         // Fixed-width ASCII table header for consistent alignment in consoles.
-        System.out.println("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
-        System.out.printf("| %-6s | %-20s | %-15s | %-25s | %15s | %-20s |%n",
-                "Code", "Name", "Continent", "Region", "Population", "Capital");
-        System.out.println("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
+        LOGGER.info("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
+        LOGGER.info(() -> String.format(
+                "| %-6s | %-20s | %-15s | %-25s | %15s | %-20s |",
+                "Code", "Name", "Continent", "Region", "Population", "Capital"
+        ));
+        LOGGER.info("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
 
         // Loop through the list of countries, but only up to the display limit.
         for (int i = 0; i < Math.min(displayLimit, countries.size()); i++) {
             Country c = countries.get(i);
-            System.out.printf("| %-6s | %-20s | %-15s | %-25s | %,15d | %-20s |%n",
+            LOGGER.info(() -> String.format(
+                    "| %-6s | %-20s | %-15s | %-25s | %,15d | %-20s |",
                     c.getCode(),
                     c.getName(),
                     c.getContinent(),
                     c.getRegion(),
                     c.getPopulation(),
-                    c.getCapitalName());
+                    c.getCapitalName()
+            ));
         }
 
         // Table footer line for visual closure.
-        System.out.println("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
+        LOGGER.info("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");
 
         // Hint to user that more rows exist than displayed (basic pagination cue).
         if (countries.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d countries.%n", displayLimit, countries.size());
+            final int total = countries.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d countries.",
+                    displayLimit, total
+            ));
         }
     }
 }
