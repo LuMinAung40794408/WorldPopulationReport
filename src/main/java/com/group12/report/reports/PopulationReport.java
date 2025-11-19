@@ -36,6 +36,7 @@ public class PopulationReport {
      * Prints the main category title for the population report.
      * @param categoryName The category name (e.g., "World Population").
      */
+    @SuppressWarnings("PMD.SystemPrintln")
     public void printCategory(String categoryName) {
         LOGGER.info(() -> "\n================ Population Report ================\n");
     }
