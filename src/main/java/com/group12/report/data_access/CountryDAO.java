@@ -4,6 +4,8 @@ import com.group12.report.models.Country;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 40794374 Thu Ta Minn Lu
@@ -12,6 +14,9 @@ import java.util.List;
  * Handles all SQL queries related to countries.
  */
 public class CountryDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(CountryDAO.class.getName());
+
     /** Holds a live JDBC connection used for all queries in this DAO. */
     private final Connection con;
 
@@ -140,21 +145,15 @@ public class CountryDAO {
 
     // ========================= SHARED HELPER METHODS =========================
 
-    /**
-     * Shared logic for parameterised queries (with optional LIMIT),
-     * used by "all countries / by continent / by region".
-     */
     private List<Country> fetchCountries(String sql, Integer limit, String... params) {
         List<Country> out = new ArrayList<>();
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
 
-            // Bind all string parameters (continent, region, etc.) first.
             for (int i = 0; i < params.length; i++) {
                 ps.setString(i + 1, params[i]);
             }
 
-            // Bind LIMIT after the text params, if applicable.
             if (limit != null && limit > 0) {
                 ps.setInt(params.length + 1, limit);
             }
@@ -167,23 +166,20 @@ public class CountryDAO {
                             rs.getString("Continent"),
                             rs.getString("Region"),
                             rs.getLong("Population"),
-                            (Integer) rs.getObject("CapitalId"),  // handles NULL
+                            (Integer) rs.getObject("CapitalId"),
                             rs.getString("CapitalName")
                     ));
                 }
             }
 
         } catch (SQLException e) {
-            System.err.println("Failed to get country report: " + e.getMessage());
+
+            LOGGER.log(Level.SEVERE, "Failed to get country report", e);
         }
 
         return out;
     }
 
-    /**
-     * Shared logic for fixed SQL Top-10 queries (no parameters),
-     * used by Top 10 methods.
-     */
     private List<Country> executeFixedCountryQuery(String sql) {
         List<Country> out = new ArrayList<>();
 
@@ -203,7 +199,8 @@ public class CountryDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Failed to execute fixed country query: " + e.getMessage());
+
+            LOGGER.log(Level.SEVERE, "Failed to execute fixed country query", e);
         }
 
         return out;

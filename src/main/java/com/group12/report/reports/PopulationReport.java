@@ -2,6 +2,8 @@ package com.group12.report.reports;
 
 import com.group12.report.models.Population;
 import java.util.List;
+import java.util.logging.Logger;
+
 /**
  * @author 40779661 Ann Min Nyo
  * This class handles displaying population reports for
@@ -9,6 +11,8 @@ import java.util.List;
  * country, district, and city.
  */
 public class PopulationReport {
+
+    private static final Logger LOGGER = Logger.getLogger(PopulationReport.class.getName());
 
     // The number of rows to display in reports (default: 15)
     private final int displayLimit;
@@ -32,8 +36,9 @@ public class PopulationReport {
      * Prints the main category title for the population report.
      * @param categoryName The category name (e.g., "World Population").
      */
+    @SuppressWarnings("PMD.SystemPrintln")
     public void printCategory(String categoryName) {
-        System.out.println("\n================ " + "Population Report" + " ================\n");
+        LOGGER.info(() -> "\n================ Population Report ================\n");
     }
 
     /**
@@ -41,40 +46,45 @@ public class PopulationReport {
      * @param populations List of Population objects containing data.
      * @param title Title of the report section.
      */
-
-
-
     public void displayPopulations(List<Population> populations, String title) {
         if (populations == null || populations.isEmpty()) {
-            System.out.println("No population data to display for: " + title);
+            LOGGER.info(() -> "No population data to display for: " + title);
             return;
         }
 
-        System.out.println("\n" + title + "\n");
+        LOGGER.info(() -> "\n" + title + "\n");
 
         // Table header
-        System.out.println("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
-        System.out.printf("| %-28s | %19s | %19s | %22s | %19s | %22s |%n",
-                "Name", "Total", "City", "City %", "Non-City", "Non-City %");
-        System.out.println("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
+        LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
+        LOGGER.info(() -> String.format(
+                "| %-28s | %19s | %19s | %22s | %19s | %22s |",
+                "Name", "Total", "City", "City %", "Non-City", "Non-City %"
+        ));
+        LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
 
         // Display each record (up to displayLimit)
         for (int i = 0; i < Math.min(displayLimit, populations.size()); i++) {
             Population p = populations.get(i);
-            System.out.printf("| %-28s | %,19d | %,19d | %21.2f%% | %,19d | %21.2f%% |%n",
+            LOGGER.info(() -> String.format(
+                    "| %-28s | %,19d | %,19d | %21.2f%% | %,19d | %21.2f%% |",
                     p.getName(),
                     p.getTotalPopulation(),
                     p.getCityPopulation(),
                     p.getCityPopulationPercent(),
                     p.getNonCityPopulation(),
-                    p.getNonCityPopulationPercent());
+                    p.getNonCityPopulationPercent()
+            ));
         }
 
-        System.out.println("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
+        LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
 
         // If there are more results than the display limit
         if (populations.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d entries.%n", displayLimit, populations.size());
+            final int total = populations.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d entries.",
+                    displayLimit, total
+            ));
         }
     }
 
@@ -85,24 +95,34 @@ public class PopulationReport {
      */
     public void displayDistrictPopulations(List<Population> districts, String title) {
         if (districts == null || districts.isEmpty()) {
-            System.out.println("No district population data to display for: " + title);
+            LOGGER.info(() -> "No district population data to display for: " + title);
             return;
         }
 
-        System.out.println("\n" + title + "\n");
-        System.out.println("+----------------------+-----------------+");
-        System.out.printf("| %-20s | %15s |%n", "District", "Population");
-        System.out.println("+----------------------+-----------------+");
+        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info("+----------------------+-----------------+");
+        LOGGER.info(() -> String.format(
+                "| %-20s | %15s |",
+                "District", "Population"
+        ));
+        LOGGER.info("+----------------------+-----------------+");
 
         for (int i = 0; i < Math.min(displayLimit, districts.size()); i++) {
             Population p = districts.get(i);
-            System.out.printf("| %-20s | %,15d |%n", p.getDistrict(), p.getTotalPopulation());
+            LOGGER.info(() -> String.format(
+                    "| %-20s | %,15d |",
+                    p.getDistrict(), p.getTotalPopulation()
+            ));
         }
 
-        System.out.println("+----------------------+-----------------+");
+        LOGGER.info("+----------------------+-----------------+");
 
         if (districts.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d districts.%n", displayLimit, districts.size());
+            final int total = districts.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d districts.",
+                    displayLimit, total
+            ));
         }
     }
 
@@ -113,26 +133,35 @@ public class PopulationReport {
      */
     public void displayCityPopulations(List<Population> cities, String title) {
         if (cities == null || cities.isEmpty()) {
-            System.out.println("No city population data to display for: " + title);
+            LOGGER.info(() -> "No city population data to display for: " + title);
             return;
         }
 
-        System.out.println("\n" + title + "\n");
-        System.out.println("+----------------------+----------------------+----------------------+-----------------+");
-        System.out.printf("| %-20s | %-20s | %-20s | %15s |%n", "City", "Country", "District", "Population");
-        System.out.println("+----------------------+----------------------+----------------------+-----------------+");
+        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
+        LOGGER.info(() -> String.format(
+                "| %-20s | %-20s | %-20s | %15s |",
+                "City", "Country", "District", "Population"
+        ));
+        LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
 
         // Display each city (up to displayLimit)
         for (int i = 0; i < Math.min(displayLimit, cities.size()); i++) {
             Population p = cities.get(i);
-            System.out.printf("| %-20s | %-20s | %-20s | %,15d |%n",
-                    p.getName(), p.getCountry(), p.getDistrict(), p.getTotalPopulation());
+            LOGGER.info(() -> String.format(
+                    "| %-20s | %-20s | %-20s | %,15d |",
+                    p.getName(), p.getCountry(), p.getDistrict(), p.getTotalPopulation()
+            ));
         }
 
-        System.out.println("+----------------------+----------------------+----------------------+-----------------+");
+        LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
 
         if (cities.size() > displayLimit) {
-            System.out.printf("Showing top %d of %d cities.%n", displayLimit, cities.size());
+            final int total = cities.size();
+            LOGGER.info(() -> String.format(
+                    "Showing top %d of %d cities.",
+                    displayLimit, total
+            ));
         }
     }
 }

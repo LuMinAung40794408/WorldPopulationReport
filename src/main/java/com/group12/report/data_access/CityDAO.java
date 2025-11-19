@@ -4,11 +4,16 @@ import com.group12.report.models.City;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author 40794374PhoneMyatKyaw
  */
 public class CityDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(CityDAO.class.getName());
+
     private final Connection con;
     // Holds a live JDBC connection used for all queries in this DAO.
 
@@ -172,22 +177,18 @@ public class CityDAO {
     // Shared logic
     private List<City> fetchCities(String sql, Integer limit, String... param) {
         List<City> out = new ArrayList<>();
-        // Prepare an output list; keeps method null-safe for callers.
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            // Create a PreparedStatement to safely bind parameters.
 
             for (int i = 0; i < param.length; i++) {
                 ps.setString(i + 1, param[i]);
             }
-            // Bind all string parameters in order (continent/region/district/country if present).
 
-            if (limit != null && limit > 0) ps.setInt(param.length + 1, limit);
-            // If LIMIT is active, bind it after the other parameters (correct 1-based index).
+            if (limit != null && limit > 0) {
+                ps.setInt(param.length + 1, limit);
+            }
 
             try (ResultSet rs = ps.executeQuery()) {
-                // Execute the query and iterate over the result rows.
-
                 while (rs.next()) {
                     out.add(new City(
                             rs.getString("Name"),
@@ -195,17 +196,14 @@ public class CityDAO {
                             rs.getString("District"),
                             rs.getLong("Population")
                     ));
-                    // Map each row to a City model using column labels (matches SELECT aliases).
                 }
             }
-            // ResultSet closed automatically by try-with-resources.
         } catch (SQLException e) {
-            System.err.println("Failed to get city report: " + e.getMessage());
-            // Log a concise error; caller gets an empty list rather than a thrown exception.
+            // replaced System.err with logger
+            LOGGER.log(Level.SEVERE, "Failed to get city report", e);
         }
 
         return out;
-        // Return the collected results (possibly empty on error or no matches).
     }
 
     private List<City> executeFixedCityQuery(String sql) {
@@ -224,7 +222,8 @@ public class CityDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Failed to execute Top10 City query: " + e.getMessage());
+            // replaced System.err with logger
+            LOGGER.log(Level.SEVERE, "Failed to execute Top10 city query", e);
         }
 
         return out;
