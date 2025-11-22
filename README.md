@@ -6,7 +6,7 @@ It demonstrates professional software engineering practices using **Scrum method
 
 ## Requirements Implementation Status
 
-32 requirements of 32 have been implemented, which is **100%**.
+32 requirements of 32 have been implemented, which is **100%** completed.
 
 > This reflects the current progress of the World Population Report System based on the official project criteria.
 ---
