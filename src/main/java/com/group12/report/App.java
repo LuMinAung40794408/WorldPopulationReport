@@ -101,15 +101,26 @@ public class App {
 
             cityReport.printCategory("City Report");
             cityReport.displayCities(cityDAO.getAllCitiesByPopulation(null),
-                    "7. All Cities in the World");
+                    "7. All Cities in the World Organized by Largest to Smallest Population");
             cityReport.displayCities(cityDAO.getCitiesByContinent("Asia", null),
-                    "8. All Cities in Asia");
+                    "8. All Cities in Asia Organized by Largest to Smallest Population");
             cityReport.displayCities(cityDAO.getCitiesByRegion("Southeast Asia", null),
-                    "9. All Cities in Southeast Asia");
+                    "9. All Cities in Southeast Asia Organized by Largest to Smallest Population");
             cityReport.displayCities(cityDAO.getCitiesByDistrict("California", null),
-                    "10. All Cities in California");
+                    "10. All Cities in California Organized by Largest to Smallest Population");
             cityReport.displayCities(cityDAO.getCitiesByCountry("Myanmar", null),
-                    "11. All Cities in Myanmar");
+                    "11. All Cities in Myanmar Organized by Largest to Smallest Population");
+
+            cityReport.displayCities(cityDAO.getTop10CitiesInWorld(),
+                    "12. Top 10 Populated Cities in the World");
+            cityReport.displayCities(cityDAO.getTop10CitiesInContinent(),
+                    "13. Top 10 Populated Cities in a Continent (Asia)");
+            cityReport.displayCities(cityDAO.getTop10CitiesInRegion(),
+                    "14. Top 10 Populated Cities in a Region (Southeast Asia)");
+            cityReport.displayCities(cityDAO.getTop10CitiesInCountry(),
+                    "15. Top 10 Populated Cities in a Country (Myanmar)");
+            cityReport.displayCities(cityDAO.getTop10CitiesInDistrict(),
+                    "16. Top 10 Populated Cities in a District (California)");
 
             // Capital
             CapitalDAO capitalDAO = new CapitalDAO(app.con);
@@ -117,17 +128,47 @@ public class App {
 
             capitalReport.printCategory("Capital Report");
             capitalReport.displayCapitals(capitalDAO.getAllCapitalsByPopulation(null),
-                    "17. All Capital Cities");
+                    "17. All Capital Cities in the World Organized by Population (Largest to Smallest)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByContinent("Asia", null),
+                    "18. All Capital Cities in a Continent Organized by Population (Asia)");
+            capitalReport.displayCapitals(capitalDAO.getCapitalsByRegion("Southeast Asia", null),
+                    "19. All Capital Cities in a Region Organized by Population (Southeast Asia)");
+
             capitalReport.displayCapitals(capitalDAO.getTop10CapitalsInWorld(),
-                    "20. Top 10 Capital Cities in the World");
+                    "20. Top 10 Populated Capital Cities in the World");
+            capitalReport.displayCapitals(capitalDAO.getTop10CapitalsInContinent(),
+                    "21. Top 10 Populated Capital Cities in a Continent (Asia)");
+            capitalReport.displayCapitals(capitalDAO.getTop10CapitalsInRegion(),
+                    "22. Top 10 Populated Capital Cities in a Region (Southeast Asia)");
+
 
             // Population
             PopulationDAO popDAO = new PopulationDAO(app.con);
             PopulationReport popReport = new PopulationReport(10);
 
             popReport.printCategory("Population Report");
-            popReport.displayPopulations(popDAO.getWorldPopulation(), "23. Population of the World");
-            popReport.displayPopulations(popDAO.getPopulationByContinent(), "24. Population of Each Continent");
+
+            popReport.displayPopulations(popDAO.getWorldPopulation(),
+                    "23. Population of the World");
+            popReport.displayPopulations(popDAO.getPopulationByContinent(),
+                    "24. Population of Each Continent");
+            popReport.displayPopulations(popDAO.getPopulationByRegion(),
+                    "25. Population of Each Region");
+            popReport.displayPopulations(popDAO.getPopulationByCountry(),
+                    "26. Population of Each Country");
+
+            popReport.displayDistrictPopulations(popDAO.getPopulationByDistrict("Myanmar"),
+                    "27. Population of Each District in Myanmar");
+
+            popReport.displayCityPopulations(popDAO.getPopulationByCity(),
+                    "28. Population of Each City");
+
+            popReport.displayPopulations(popDAO.getCityVsNonCityByContinent(),
+                    "29. City vs Non-City Population by Continent");
+            popReport.displayPopulations(popDAO.getCityVsNonCityByRegion(),
+                    "30. City vs Non-City Population by Region");
+            popReport.displayPopulations(popDAO.getCityVsNonCityByCountry(),
+                    "31. City vs Non-City Population by Country");
 
             // Language
             LanguageDAO languageDAO = new LanguageDAO(app.con);
