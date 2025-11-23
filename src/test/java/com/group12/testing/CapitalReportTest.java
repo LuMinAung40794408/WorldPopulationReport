@@ -22,6 +22,8 @@ class CapitalReportTest {
 
     @BeforeAll
     static void init() {
+
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
         // Same kind of limit you use in App (10)
         report = new CapitalReport(10);
     }
