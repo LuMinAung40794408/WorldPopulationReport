@@ -35,7 +35,8 @@ public class CapitalReport {
      * @param categoryName The name of the report category (e.g., "World", "Continent", "Region")
      */
     public void printCategory(String categoryName) {
-        LOGGER.info(() -> "\n================ Capital Report ================\n");
+        LOGGER.info(" ");  // blank line before category
+        LOGGER.info("================   Capital Report   ================");
     }
 
     /**
@@ -56,7 +57,10 @@ public class CapitalReport {
         }
 
         // Print the report title
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(" ");        // blank line before title
+        LOGGER.info(title);      // print title
+        LOGGER.info(" ");        // blank line after title
+
 
         // Print the table header
         LOGGER.info("+----------------------+----------------------+-----------------+");

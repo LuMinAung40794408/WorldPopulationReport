@@ -33,6 +33,7 @@ class PopulationReportTest {
 
     @BeforeAll
     static void init() {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
         reportDefault = new PopulationReport();
         reportLimit5  = new PopulationReport(5);
     }
@@ -167,7 +168,7 @@ class PopulationReportTest {
             handler.flush();
             String printed = out.toString();
 
-            assertTrue(printed.contains("================ Population Report ================"));
+            assertTrue(printed.contains("================   Population Report   ================"));
 
         } finally {
             logger.removeHandler(handler);

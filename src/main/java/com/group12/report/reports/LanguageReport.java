@@ -44,7 +44,10 @@ public class LanguageReport {
      *                     but can be used to show different report categories later).
      */
     public void printCategory(String categoryName) {
-        LOGGER.info(() -> "\n================ Language Report ================\n");
+        LOGGER.info(" ");  // blank line before category
+        LOGGER.info("================   Language Report   ================");
+        LOGGER.info(" ");  // blank line after category
+
     }
 
 
@@ -73,7 +76,9 @@ public class LanguageReport {
         }
 
         // Print report title.
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(title);      // print title
+        LOGGER.info(" ");        // blank line after title
+
 
         // Print table header with column borders.
         LOGGER.info("+----------------------+-----------------+----------------------+");
