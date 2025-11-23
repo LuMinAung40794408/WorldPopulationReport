@@ -38,7 +38,8 @@ public class PopulationReport {
      */
     @SuppressWarnings("PMD.SystemPrintln")
     public void printCategory(String categoryName) {
-        LOGGER.info(() -> "\n================ Population Report ================\n");
+        LOGGER.info(" ");  // blank line before category
+        LOGGER.info("================   Population Report   ================");
     }
 
     /**
@@ -52,9 +53,11 @@ public class PopulationReport {
             return;
         }
 
-        LOGGER.info(() -> "\n" + title + "\n");
+        // Correct title spacing
+        LOGGER.info(" ");
+        LOGGER.info(title);
+        LOGGER.info(" ");
 
-        // Table header
         LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
         LOGGER.info(() -> String.format(
                 "| %-28s | %19s | %19s | %22s | %19s | %22s |",
@@ -62,7 +65,6 @@ public class PopulationReport {
         ));
         LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
 
-        // Display each record (up to displayLimit)
         for (int i = 0; i < Math.min(displayLimit, populations.size()); i++) {
             Population p = populations.get(i);
             LOGGER.info(() -> String.format(
@@ -78,15 +80,16 @@ public class PopulationReport {
 
         LOGGER.info("+------------------------------+---------------------+---------------------+------------------------+---------------------+------------------------+");
 
-        // If there are more results than the display limit
         if (populations.size() > displayLimit) {
-            final int total = populations.size();
             LOGGER.info(() -> String.format(
                     "Showing top %d of %d entries.",
-                    displayLimit, total
+                    displayLimit, populations.size()
             ));
         }
     }
+
+
+
 
     /**
      * Displays district-level population report.
@@ -99,7 +102,10 @@ public class PopulationReport {
             return;
         }
 
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(" ");
+        LOGGER.info(title);
+        LOGGER.info(" ");
+
         LOGGER.info("+----------------------+-----------------+");
         LOGGER.info(() -> String.format(
                 "| %-20s | %15s |",
@@ -118,13 +124,14 @@ public class PopulationReport {
         LOGGER.info("+----------------------+-----------------+");
 
         if (districts.size() > displayLimit) {
-            final int total = districts.size();
             LOGGER.info(() -> String.format(
                     "Showing top %d of %d districts.",
-                    displayLimit, total
+                    displayLimit, districts.size()
             ));
         }
     }
+
+
 
     /**
      * Displays city-level population report including city, country, and district.
@@ -137,7 +144,10 @@ public class PopulationReport {
             return;
         }
 
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(" ");
+        LOGGER.info(title);
+        LOGGER.info(" ");
+
         LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
         LOGGER.info(() -> String.format(
                 "| %-20s | %-20s | %-20s | %15s |",
@@ -145,7 +155,6 @@ public class PopulationReport {
         ));
         LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
 
-        // Display each city (up to displayLimit)
         for (int i = 0; i < Math.min(displayLimit, cities.size()); i++) {
             Population p = cities.get(i);
             LOGGER.info(() -> String.format(
@@ -157,10 +166,9 @@ public class PopulationReport {
         LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");
 
         if (cities.size() > displayLimit) {
-            final int total = cities.size();
             LOGGER.info(() -> String.format(
                     "Showing top %d of %d cities.",
-                    displayLimit, total
+                    displayLimit, cities.size()
             ));
         }
     }

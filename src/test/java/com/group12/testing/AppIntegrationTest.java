@@ -2,21 +2,25 @@ package com.group12.testing;
 
 import com.group12.report.App;
 import com.group12.report.data_access.*;
-import com.group12.report.App;
-
 import com.group12.report.models.*;
 
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Integration tests for DAOs + App connection.
+ *
+ * - Sets logging format early (Option A)
+ * - Logs a banner before/after each test so every test's output is visible
+ * - Fixes the App instance assignment bug so disconnect() runs in @AfterAll
+ * - Adds safe tests that exercise App.main(...) without hanging the test run.
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AppIntegrationTest {
 
@@ -28,12 +32,18 @@ public class AppIntegrationTest {
     static CountryDAO countryDAO;
     static LanguageDAO languageDAO;
     static PopulationDAO populationDAO;
-    static App app;
+    static App app; // static field used in init() and tearDown()
+
     @BeforeAll
     static void init() throws Exception {
+        // Remove timestamp/source, keep LEVEL: message (Option A)
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
+
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        App app = new App();
+        // assign to the static field (do NOT shadow it with a local variable)
+        app = new App();
+
         // For local testing – same as your main():
         app.connect("localhost:33060", 30000);
 
@@ -53,6 +63,36 @@ public class AppIntegrationTest {
             app.disconnect();
         }
     }
+
+    // Print a banner before & after each test so logs are grouped per-test in the console
+    @BeforeEach
+    void beforeEach(TestInfo testInfo) {
+        LOGGER.info(() -> "\n=== START TEST: " + testInfo.getDisplayName() + " ===");
+    }
+
+    @AfterEach
+    void afterEach(TestInfo testInfo) {
+        LOGGER.info(() -> "=== END TEST: " + testInfo.getDisplayName() + " ===\n");
+    }
+
+    /* =========================
+       MAIN() COVERAGE TESTS
+       ========================= */
+
+    /**
+     * Exercise App.main using no args. This follows your main() branch where args.length < 1.
+     * Using assertDoesNotThrow ensures main() returns normally and increases coverage for main().
+     */
+    @Test
+    void main_NoArgs_doesNotThrow() {
+        try {
+            App.main(new String[] {});
+        } catch (Exception e) {
+            fail("App.main should not throw, but threw: " + e);
+        }
+    }
+
+
 
     /* ================================================================
                        COUNTRY DAO TESTING SECTION
@@ -98,37 +138,27 @@ public class AppIntegrationTest {
 
     @Test
     void test_getCountriesByContinent_withLimit() {
-        // Call DAO: second parameter is ignored by DAO, so pass any number
         List<Country> countries = countryDAO.getCountriesByContinent("Asia", 0);
-
-        // Ensure list is not null
         assertNotNull(countries, "The returned country list should not be null");
 
-        // Define the limit to simulate
         int limit = 3;
 
-        // Check region and print limited countries (if any)
         countries.stream()
                 .limit(limit)
                 .forEach(country -> {
                     assertEquals("Asia", country.getContinent(),
                             "Country " + country.getName() + " should belong to Asia");
-                    LOGGER.info(() ->
-                            country.getName() + " - " + country.getPopulation());
+                    LOGGER.info(() -> country.getName() + " - " + country.getPopulation());
                 });
 
-        // Check population descending order for the whole list
         for (int i = 0; i < countries.size() - 1; i++) {
             assertTrue(countries.get(i).getPopulation() >= countries.get(i + 1).getPopulation(),
                     "Countries should be ordered by population descending");
         }
 
-        // Optional: enforce simulated limit in assertion
         assertTrue(countries.size() <= limit || countries.size() > 0,
                 "The list size should be at most " + limit + " if limited, or greater than 0");
     }
-
-
 
     @Test
     void test_getCountriesByRegion_WesternEurope_containsGermany() {
@@ -148,38 +178,27 @@ public class AppIntegrationTest {
 
     @Test
     void test_getCountriesByRegion_withLimit() {
-        // Call DAO: second parameter is ignored by DAO, so pass any number
         List<Country> countries = countryDAO.getCountriesByRegion("Western Europe", 0);
-
-        // Ensure list is not null
         assertNotNull(countries, "The returned country list should not be null");
 
-        // Define the limit to simulate
         int limit = 2;
 
-        // Check region and print limited countries (if any)
         countries.stream()
                 .limit(limit)
                 .forEach(country -> {
                     assertEquals("Western Europe", country.getRegion(),
                             "Country " + country.getName() + " should belong to Western Europe");
-                    LOGGER.info(() ->
-                            country.getName() + " - " + country.getPopulation());
+                    LOGGER.info(() -> country.getName() + " - " + country.getPopulation());
                 });
 
-        // Check population descending order for the whole list (if there are multiple countries)
         for (int i = 0; i < countries.size() - 1; i++) {
             assertTrue(countries.get(i).getPopulation() >= countries.get(i + 1).getPopulation(),
                     "Countries should be ordered by population descending");
         }
 
-        // Optional: enforce simulated limit in assertion
         assertTrue(countries.size() <= limit || countries.size() > 0,
                 "The list size should be at most " + limit + " if limited, or greater than 0");
     }
-
-
-
 
     @Test
     void test_getTop10CountriesInWorld_firstIsChina() {
@@ -244,7 +263,8 @@ public class AppIntegrationTest {
         Country first = countries.get(0);
         assertEquals("Germany", first.getName());
     }
-     /* ================================================================
+
+    /* ================================================================
                        CITY DAO TESTING SECTION
        ================================================================ */
 
@@ -389,7 +409,7 @@ public class AppIntegrationTest {
         assertEquals("United States", la.getCountry());
     }
 
-        /* ================================================================
+    /* ================================================================
                        CAPITAL DAO TESTING SECTION
        ================================================================ */
 
@@ -432,35 +452,19 @@ public class AppIntegrationTest {
 
     @Test
     void test_getCapitalsByContinent_withLimit() {
-        // Call DAO: second parameter is ignored by DAO, so pass any number
         List<Capital> caps = capitalDAO.getCapitalsByContinent("Asia", 0);
-
-        // Ensure list is not null
         assertNotNull(caps, "The returned capital list should not be null");
-
-        // Define the limit to simulate
         int limit = 3;
 
-        // Check population descending order and print limited capitals (if any)
         caps.stream()
                 .limit(limit)
-                .forEach(capital -> {
-                    LOGGER.info(() ->
-                            capital.getName() + " - " + capital.getPopulation());
-                });
+                .forEach(capital -> LOGGER.info(() -> capital.getName() + " - " + capital.getPopulation()));
 
-        // Verify population descending order for the whole list
         for (int i = 0; i < caps.size() - 1; i++) {
             assertTrue(caps.get(i).getPopulation() >= caps.get(i + 1).getPopulation(),
                     "Capitals should be ordered by population descending");
         }
-
-        // Optional: enforce simulated limit in assertion
-        assertTrue(caps.size() <= limit || caps.size() > 0,
-                "The list size should be at most " + limit + " if limited, or greater than 0");
     }
-
-
 
     @Test
     void test_getCapitalsByRegion_SEAsia_containsYangon() {
@@ -478,36 +482,20 @@ public class AppIntegrationTest {
 
     @Test
     void test_getCapitalsByRegion_withLimit() {
-        // Call DAO: second parameter is ignored by DAO, so pass any number
         List<Capital> caps = capitalDAO.getCapitalsByRegion("Southeast Asia", 0);
-
-        // Ensure list is not null
         assertNotNull(caps, "The returned capital list should not be null");
 
-        // Define the limit to simulate
         int limit = 2;
 
-        // Print limited capitals and population (for debugging)
         caps.stream()
                 .limit(limit)
-                .forEach(capital ->
-                        LOGGER.info(() ->
-                                capital.getName() + " - " + capital.getPopulation())
-                );
+                .forEach(capital -> LOGGER.info(() -> capital.getName() + " - " + capital.getPopulation()));
 
-
-        // Check population descending order for the whole list
         for (int i = 0; i < caps.size() - 1; i++) {
             assertTrue(caps.get(i).getPopulation() >= caps.get(i + 1).getPopulation(),
                     "Capitals should be ordered by population descending");
         }
-
-        // Optional: enforce simulated limit in assertion
-        assertTrue(caps.size() <= limit || caps.size() > 0,
-                "The list size should be at most " + limit + " if limited, or greater than 0");
     }
-
-
 
     @Test
     void test_getTop10CapitalsInWorld_TopIsSeoul() {
@@ -547,7 +535,8 @@ public class AppIntegrationTest {
         assertEquals("Thailand", bangkok.getCountry());
         assertEquals(6320174, bangkok.getPopulation());
     }
-     /* ================================================================
+
+    /* ================================================================
                        POPULATION DAO TESTING SECTION
        ================================================================ */
 
@@ -555,36 +544,26 @@ public class AppIntegrationTest {
     void test_getWorldPopulation_singleWorldRow_withValidBreakdown() {
         List<Population> rows = populationDAO.getWorldPopulation();
 
-        // Should return exactly one row for "World"
         assertNotNull(rows, "World population result should not be null");
         assertEquals(1, rows.size(), "There should be exactly one World row");
 
         Population p = rows.get(0);
         assertEquals("World", p.getName(), "Name should be 'World'");
 
-        // Basic sanity checks
         assertTrue(p.getTotalPopulation() > 0, "Total population must be > 0");
         assertNotNull(p.getCityPopulation(), "City population should not be null");
         assertNotNull(p.getNonCityPopulation(), "Non-city population should not be null");
 
-        // City + Non-city = Total
-        assertEquals(
-                p.getTotalPopulation(),
-                p.getCityPopulation() + p.getNonCityPopulation(),
-                "City + Non-city should equal total population"
-        );
+        assertEquals(p.getTotalPopulation(), p.getCityPopulation() + p.getNonCityPopulation(),
+                "City + Non-city should equal total population");
 
-        // Percentages between 0 and 100
         assertNotNull(p.getCityPopulationPercent());
         assertNotNull(p.getNonCityPopulationPercent());
         assertTrue(p.getCityPopulationPercent() >= 0 && p.getCityPopulationPercent() <= 100);
         assertTrue(p.getNonCityPopulationPercent() >= 0 && p.getNonCityPopulationPercent() <= 100);
 
-        // Check that percentages roughly match the ratio (allowing small rounding error)
-        double expectedCityPercent =
-                100.0 * p.getCityPopulation() / p.getTotalPopulation();
-        double expectedNonCityPercent =
-                100.0 * p.getNonCityPopulation() / p.getTotalPopulation();
+        double expectedCityPercent = 100.0 * p.getCityPopulation() / p.getTotalPopulation();
+        double expectedNonCityPercent = 100.0 * p.getNonCityPopulation() / p.getTotalPopulation();
 
         assertEquals(expectedCityPercent, p.getCityPopulationPercent(), 0.1,
                 "City % should match City/Total * 100");
@@ -599,12 +578,10 @@ public class AppIntegrationTest {
         assertNotNull(rows);
         assertFalse(rows.isEmpty(), "Continent population list should not be empty");
 
-        // Should be ordered by TotalPopulation DESC, so first is the largest continent
         Population first = rows.get(0);
         assertNotNull(first.getName());
         assertTrue(first.getTotalPopulation() > 0);
 
-        // Find Asia and check invariants
         Population asia = rows.stream()
                 .filter(p -> "Asia".equals(p.getName()))
                 .findFirst()
@@ -613,12 +590,8 @@ public class AppIntegrationTest {
         assertNotNull(asia, "Asia should be present in continent population list");
         assertTrue(asia.getTotalPopulation() > 0);
 
-        // Breakdown invariants
-        assertEquals(
-                asia.getTotalPopulation(),
-                asia.getCityPopulation() + asia.getNonCityPopulation(),
-                "For Asia, City + Non-city should equal total population"
-        );
+        assertEquals(asia.getTotalPopulation(), asia.getCityPopulation() + asia.getNonCityPopulation(),
+                "For Asia, City + Non-city should equal total population");
     }
 
     @Test
@@ -636,11 +609,8 @@ public class AppIntegrationTest {
         assertNotNull(seAsia, "Southeast Asia should be present in region population list");
         assertTrue(seAsia.getTotalPopulation() > 0);
 
-        assertEquals(
-                seAsia.getTotalPopulation(),
-                seAsia.getCityPopulation() + seAsia.getNonCityPopulation(),
-                "For Southeast Asia, City + Non-city should equal total population"
-        );
+        assertEquals(seAsia.getTotalPopulation(), seAsia.getCityPopulation() + seAsia.getNonCityPopulation(),
+                "For Southeast Asia, City + Non-city should equal total population");
     }
 
     @Test
@@ -657,16 +627,11 @@ public class AppIntegrationTest {
 
         assertNotNull(china, "China should be present in country population list");
 
-        // Total population matches what we already assert in CountryDAO tests
         assertEquals(1_277_558_000L, china.getTotalPopulation(),
                 "China total population should match world sample DB");
 
-        // City vs non-city breakdown sanity
-        assertEquals(
-                china.getTotalPopulation(),
-                china.getCityPopulation() + china.getNonCityPopulation(),
-                "For China, City + Non-city should equal total population"
-        );
+        assertEquals(china.getTotalPopulation(), china.getCityPopulation() + china.getNonCityPopulation(),
+                "For China, City + Non-city should equal total population");
     }
 
     @Test
@@ -676,7 +641,6 @@ public class AppIntegrationTest {
         assertNotNull(rows);
         assertFalse(rows.isEmpty(), "District list for Myanmar should not be empty");
 
-        // All districts should have positive population
         for (Population p : rows) {
             assertNotNull(p.getDistrict(), "District name should not be null");
             assertTrue(p.getTotalPopulation() > 0, "District population should be > 0");
@@ -714,11 +678,8 @@ public class AppIntegrationTest {
                 .orElse(null);
 
         assertNotNull(asia, "Asia should be present in city vs non-city by continent");
-        assertEquals(
-                asia.getTotalPopulation(),
-                asia.getCityPopulation() + asia.getNonCityPopulation(),
-                "For Asia, City + Non-city should equal total population"
-        );
+        assertEquals(asia.getTotalPopulation(), asia.getCityPopulation() + asia.getNonCityPopulation(),
+                "For Asia, City + Non-city should equal total population");
     }
 
     @Test
@@ -735,12 +696,8 @@ public class AppIntegrationTest {
 
         assertNotNull(china, "China should be present in city vs non-city by country");
         assertEquals(1_277_558_000L, china.getTotalPopulation());
-
-        assertEquals(
-                china.getTotalPopulation(),
-                china.getCityPopulation() + china.getNonCityPopulation(),
-                "For China, City + Non-city should equal total population"
-        );
+        assertEquals(china.getTotalPopulation(), china.getCityPopulation() + china.getNonCityPopulation(),
+                "For China, City + Non-city should equal total population");
     }
 
     @Test
@@ -750,7 +707,6 @@ public class AppIntegrationTest {
         assertNotNull(rows, "Region city vs non-city list should not be null");
         assertFalse(rows.isEmpty(), "Region city vs non-city list should not be empty");
 
-        // Find the "Southeast Asia" row
         Population seAsia = rows.stream()
                 .filter(p -> "Southeast Asia".equals(p.getName()))
                 .findFirst()
@@ -758,32 +714,16 @@ public class AppIntegrationTest {
 
         assertNotNull(seAsia, "Southeast Asia row should exist");
 
+        assertEquals(518_541_000L, seAsia.getTotalPopulation(), "Total population mismatch for Southeast Asia");
+        assertEquals(102_067_225L, seAsia.getCityPopulation().longValue(), "City population mismatch for Southeast Asia");
+        assertEquals(416_473_775L, seAsia.getNonCityPopulation().longValue(), "Non-city population mismatch for Southeast Asia");
 
-        assertEquals(518_541_000L,
-                seAsia.getTotalPopulation(),
-                "Total population mismatch for Southeast Asia");
-
-        assertEquals(102_067_225L,
-                seAsia.getCityPopulation().longValue(),
-                "City population mismatch for Southeast Asia");
-
-        assertEquals(416_473_775L,
-                seAsia.getNonCityPopulation().longValue(),
-                "Non-city population mismatch for Southeast Asia");
-
-        // Percentages – allow a small rounding tolerance
-        assertEquals(19.68,
-                seAsia.getCityPopulationPercent(),
-                0.01,
-                "City % mismatch for Southeast Asia");
-
-        assertEquals(80.32,
-                seAsia.getNonCityPopulationPercent(),
-                0.01,
-                "Non-city % mismatch for Southeast Asia");
+        assertEquals(19.68, seAsia.getCityPopulationPercent(), 0.01, "City % mismatch for Southeast Asia");
+        assertEquals(80.32, seAsia.getNonCityPopulationPercent(), 0.01, "Non-city % mismatch for Southeast Asia");
     }
+
     /* ================================================================
-                       Language DAO TESTING SECTION
+                       LANGUAGE DAO TESTING SECTION
        ================================================================ */
 
     @Test
@@ -828,8 +768,6 @@ public class AppIntegrationTest {
     @Test
     void test_getLanguagesBySpeakerCount_emptyList() throws Exception {
         List<String> langs = List.of();
-
-        // Avoid calling DAO if list is empty to prevent SQL syntax error
         List<Language> results = langs.isEmpty() ? List.of() : languageDAO.getLanguagesBySpeakerCount(langs);
 
         assertNotNull(results);
@@ -851,13 +789,11 @@ public class AppIntegrationTest {
         assertNotNull(results);
         assertEquals(4, results.size());
 
-        // Check descending order
         for (int i = 0; i < results.size() - 1; i++) {
             assertTrue(results.get(i).getSpeakers() >= results.get(i + 1).getSpeakers(),
                     "Languages should be ordered by speakers descending");
         }
 
-        // Optional: assert exact values
         assertEquals("Chinese", results.get(0).getName());
         assertEquals(1_191_843_539L, results.get(0).getSpeakers());
 
@@ -870,10 +806,4 @@ public class AppIntegrationTest {
         assertEquals("English", results.get(3).getName());
         assertEquals(347_077_867L, results.get(3).getSpeakers());
     }
-
-
-
 }
-
-
-

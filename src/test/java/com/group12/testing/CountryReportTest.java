@@ -22,6 +22,8 @@ class CountryReportTest {
 
     @BeforeAll
     static void init() {
+
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
         // Same display limit as App.java (you use 10 there)
         report = new CountryReport(10);
     }

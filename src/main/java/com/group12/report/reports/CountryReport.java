@@ -26,7 +26,8 @@ public class CountryReport {
      * Prints the category header for country reports.
      */
     public void printCategory(String categoryName) {
-        LOGGER.info(() -> "\n================   Country Report   ================\n");
+        LOGGER.info(" ");  // blank line before category
+        LOGGER.info("================   Country Report   ================");
     }
 
     /**
@@ -43,7 +44,10 @@ public class CountryReport {
         }
 
         // Prints a descriptive title for the current table (e.g., filter context).
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(" ");        // blank line before title
+        LOGGER.info(title);      // print title
+        LOGGER.info(" ");        // blank line after title
+
 
         // Fixed-width ASCII table header for consistent alignment in consoles.
         LOGGER.info("+--------+----------------------+-----------------+---------------------------+-----------------+----------------------+");

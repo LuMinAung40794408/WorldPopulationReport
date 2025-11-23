@@ -18,6 +18,8 @@ class LanguageReportTest {
 
     @BeforeAll
     static void init() {
+
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
         // Use the custom constructor (like in App.java where you use new LanguageReport(10))
         reportWithCustomLimit = new LanguageReport(10);
     }
