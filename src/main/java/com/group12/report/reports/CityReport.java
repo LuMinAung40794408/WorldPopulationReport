@@ -22,7 +22,8 @@ public class CityReport {
 
     // Overloaded constructor: caller controls how many rows to show.
     public void printCategory(String categoryName) {
-        LOGGER.info(() -> "\n================   City Report   ================\n");
+        LOGGER.info(" ");  // blank line before category
+        LOGGER.info("================   City Report   ================");
     }
 
     public void displayCities(List<City> cities, String title) {
@@ -32,7 +33,10 @@ public class CityReport {
         }
         // Defensive check: avoids NPE and informs user when there’s no data.
 
-        LOGGER.info(() -> "\n" + title + "\n");
+        LOGGER.info(" ");        // blank line before title
+        LOGGER.info(title);      // print title
+        LOGGER.info(" ");        // blank line after title
+
         // Prints a descriptive title for the current table (e.g., filter context).
 
         LOGGER.info("+----------------------+----------------------+----------------------+-----------------+");

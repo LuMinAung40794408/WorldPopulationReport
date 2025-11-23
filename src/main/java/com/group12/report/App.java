@@ -68,6 +68,10 @@ public class App {
     }
 
     public static void main(String[] args) {
+
+        // <<< Add this line FIRST >>>
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%n");
+
         App app = new App();
 
         try {
