@@ -2,9 +2,9 @@ name: Bug Report
 description: File a bug report.
 title: "[Bug]: "
 labels: ["bug", "triage"]
-projects: ["padaukwai/Lab02R4"]
+projects: ["LuMinAung40794408/WorldPopulationReport"]
 assignees:
-  - padaukwai
+  - LuMinAung40794408, 40794418yuyakoko
 body:
   - type: markdown
     attributes:
